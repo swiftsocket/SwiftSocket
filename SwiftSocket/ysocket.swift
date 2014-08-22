@@ -1,6 +1,32 @@
+/*
+* Copyright (c) 2014, 小p
+* All rights reserved.
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above copyright
+*       notice, this list of conditions and the following disclaimer in the
+*       documentation and/or other materials provided with the distribution.
+*     * Neither the name of the University of California, Berkeley nor the
+*       names of its contributors may be used to endorse or promote products
+*       derived from this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS "AS IS" AND ANY
+* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
+* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 //
 //  ysocket.swift
-//  SwiftC
+//  SwiftSocket
 //
 //  Created by pengyunchou on 14-8-21.
 //  Copyright (c) 2014年 swift. All rights reserved.
@@ -26,6 +52,10 @@ class YSocket{
         self.addr=a
         self.port=p
     }
+    /*
+     * connect to server
+     * return success or fail with message
+     */
     func connect()->(Bool,String){
         var rs:Int32=c_ysocket_connect(self.addr, Int32(self.port))
         if rs>0{
@@ -44,6 +74,10 @@ class YSocket{
             }
         }
     }
+    /*
+    * close socket
+    * return success or fail with message
+    */
     func close()->(Bool,String){
         if let fd:Int32=self.fd{
             c_ysocket_close(fd)
@@ -52,7 +86,11 @@ class YSocket{
             return (false,"socket not open")
         }
     }
-    func send(data d:[CChar])->(Bool,String){
+    /*
+    * send data
+    * return success or fail with message
+    */
+    func send(data d:[Int8])->(Bool,String){
         if let fd:Int32=self.fd{
             var sendsize:Int32=c_ysocket_send(fd, d, Int32(d.count))
             if Int(sendsize)==d.count{
@@ -64,6 +102,10 @@ class YSocket{
             return (false,"socket not open")
         }
     }
+    /*
+    * send string
+    * return success or fail with message
+    */
     func send(str s:String)->(Bool,String){
         if let fd:Int32=self.fd{
             var sendsize:Int32=c_ysocket_send(fd, s, Int32(strlen(s)))
@@ -76,6 +118,10 @@ class YSocket{
             return (false,"socket not open")
         }
     }
+    /*
+    * read data with expect length
+    * return success or fail with message
+    */
     func read(expectlen:Int)->[Int8]?{
         if let fd:Int32 = self.fd{
             var buff:[Int8] = [Int8](count:expectlen,repeatedValue:0x0)
