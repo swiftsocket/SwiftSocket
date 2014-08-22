@@ -1,5 +1,5 @@
-# a simple socket library for  apple swift lang
-# uaage
+# a simple socket library for apple swift lang
+# useage
 > drag ysocket.c and ysocket.swift to your project
 > just use apis in YSocket class
 
