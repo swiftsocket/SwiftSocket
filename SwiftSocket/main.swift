@@ -32,7 +32,7 @@
 //  Copyright (c) 2014年 swift. All rights reserved.
 //
 //创建socket
-var socket:YSocket = YSocket(addr: "www.google.com", port: 80)
+var socket:YSocket = YSocket(addr: "baidu.com", port: 80)
 //连接
 var (success,errmsg)=socket.connect()
 if success{

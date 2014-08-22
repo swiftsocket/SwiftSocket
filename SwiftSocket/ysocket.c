@@ -105,5 +105,5 @@ int ysocket_send(int socketfd,const char *data,int len){
         }
         byteswrite+=writelen;
     }
-    return 0;
+    return byteswrite;
 }

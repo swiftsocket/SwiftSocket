@@ -109,7 +109,7 @@ class YSocket{
     func send(str s:String)->(Bool,String){
         if let fd:Int32=self.fd{
             var sendsize:Int32=c_ysocket_send(fd, s, Int32(strlen(s)))
-            if Int(sendsize)==Int(strlen(s)){
+            if sendsize==Int32(strlen(s)){
                 return (true,"send success")
             }else{
                 return (false,"send error")
