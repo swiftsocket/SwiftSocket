@@ -1,44 +1,40 @@
 /*
-* Copyright (c) 2014, 小p
-* All rights reserved.
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*     * Neither the name of the University of California, Berkeley nor the
-*       names of its contributors may be used to endorse or promote products
-*       derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS "AS IS" AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-//
-//  ysocket.swift
-//  SwiftSocket
-//
-//  Created by pengyunchou on 14-8-21.
-//  Copyright (c) 2014年 swift. All rights reserved.
-//
-import Foundation
+Copyright (c) <2014>, skysent
+All rights reserved.
 
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+3. All advertising materials mentioning features or use of this software
+must display the following acknowledgement:
+This product includes software developed by skysent.
+4. Neither the name of the skysent nor the
+names of its contributors may be used to endorse or promote products
+derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY skysent ''AS IS'' AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL skysent BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+import Foundation
 
 @asmname("ysocket_connect") func c_ysocket_connect(host:ConstUnsafePointer<Int8>,port:Int32) -> Int32
 @asmname("ysocket_close") func c_ysocket_close(fd:Int32) -> Int32
 @asmname("ysocket_send") func c_ysocket_send(fd:Int32,ConstUnsafePointer<Int8>,len:Int32) -> Int32
-@asmname("ysocket_pull") func c_ysocket_pull(fd:Int32,UnsafePointer<Int8>,len:Int32) -> Int32
-
+@asmname("ysocket_pull") func c_ysocket_pull(fd:Int32,buff:UnsafePointer<Int8>,len:Int32) -> Int32
+@asmname("ysocket_listen") func c_ysocket_listen(addr:ConstUnsafePointer<Int8>,port:Int32)->Int32
+@asmname("ysocket_accept") func c_ysocket_accept(onsocketfd:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
 
 class YSocket{
     var addr:String
@@ -52,6 +48,8 @@ class YSocket{
         self.addr=a
         self.port=p
     }
+}
+class TCPClient:YSocket{
     /*
      * connect to server
      * return success or fail with message
@@ -81,6 +79,7 @@ class YSocket{
     func close()->(Bool,String){
         if let fd:Int32=self.fd{
             c_ysocket_close(fd)
+            self.fd=nil
             return (true,"close success")
         }else{
             return (false,"socket not open")
@@ -132,3 +131,34 @@ class YSocket{
        return nil
     }
 }
+
+class TCPServer:YSocket{
+
+    func listen()->(Bool,String){
+        
+        var fd:Int32=c_ysocket_listen(self.addr, Int32(self.port))
+        if fd>0{
+            self.fd=fd
+            return (true,"listen success")
+        }else{
+            return (false,"listen fail")
+        }
+    }
+    func accept()->TCPClient?{
+        if let serferfd=self.fd{
+            var buff:[Int8] = [Int8](count:16,repeatedValue:0x0)
+            var port:Int32=0
+            var clientfd:Int32=c_ysocket_accept(serferfd, &buff,&port)
+            var tcpClient:TCPClient=TCPClient()
+            tcpClient.fd=clientfd
+            tcpClient.port=Int(port)
+            if let addr=String.stringWithUTF8String(buff){
+               tcpClient.addr=addr
+            }
+            return tcpClient
+        }
+        return nil
+    }
+}
+
+
