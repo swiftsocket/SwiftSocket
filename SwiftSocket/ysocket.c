@@ -54,7 +54,7 @@ void socket_set_block(int socket,int on) {
         fcntl(socket, F_SETFL, flags);
     }
 }
-int ysocket_connect(const char *host,int port){
+int ysocket_connect(const char *host,int port,int timeout){
     signal(SIGPIPE, signal_function);
     struct sockaddr_in sa;
     struct hostent *hp;
@@ -73,7 +73,7 @@ int ysocket_connect(const char *host,int port){
     struct timeval  tvSelect;
     FD_ZERO(&fdwrite);
     FD_SET(sockfd, &fdwrite);
-    tvSelect.tv_sec = 15;
+    tvSelect.tv_sec = timeout;
     tvSelect.tv_usec = 0;
     int retval = select(sockfd + 1,NULL, &fdwrite, NULL, &tvSelect);
     if (retval<0) {

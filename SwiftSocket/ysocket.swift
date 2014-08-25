@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 import Foundation
 
-@asmname("ysocket_connect") func c_ysocket_connect(host:ConstUnsafePointer<Int8>,port:Int32) -> Int32
+@asmname("ysocket_connect") func c_ysocket_connect(host:ConstUnsafePointer<Int8>,port:Int32,timeout:Int32) -> Int32
 @asmname("ysocket_close") func c_ysocket_close(fd:Int32) -> Int32
 @asmname("ysocket_send") func c_ysocket_send(fd:Int32,ConstUnsafePointer<Int8>,len:Int32) -> Int32
 @asmname("ysocket_pull") func c_ysocket_pull(fd:Int32,buff:UnsafePointer<Int8>,len:Int32) -> Int32
@@ -54,8 +54,8 @@ class TCPClient:YSocket{
      * connect to server
      * return success or fail with message
      */
-    func connect()->(Bool,String){
-        var rs:Int32=c_ysocket_connect(self.addr, Int32(self.port))
+    func connect(timeout t:Int)->(Bool,String){
+        var rs:Int32=c_ysocket_connect(self.addr, Int32(self.port),Int32(t))
         if rs>0{
             self.fd=rs
             return (true,"connect success")

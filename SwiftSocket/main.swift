@@ -31,7 +31,7 @@ func testclient(){
     //创建socket
     var client:TCPClient = TCPClient(addr: "www.apple.com", port: 80)
     //连接
-    var (success,errmsg)=client.connect()
+    var (success,errmsg)=client.connect(timeout: 1)
     if success{
         //发送数据
         var (success,errmsg)=client.send(str:"GET / HTTP/1.0\n\n" )
@@ -52,7 +52,8 @@ func testclient(){
 }
 func echoService(client c:TCPClient){
     println("newclient from:\(c.addr)[\(c.port)]")
-    c.send(str: "hello world\n")
+    var d=c.read(1024*10)
+    c.send(data: d!)
     c.close()
 }
 func testserver(){
@@ -69,6 +70,7 @@ func testserver(){
     }else{
         println(msg)
     }
-    
 }
+testclient()
+println("end tet client")
 testserver()
