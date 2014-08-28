@@ -149,6 +149,9 @@ class TCPServer:YSocket{
             var buff:[Int8] = [Int8](count:16,repeatedValue:0x0)
             var port:Int32=0
             var clientfd:Int32=c_ysocket_accept(serferfd, &buff,&port)
+            if clientfd<0{
+                return nil
+            }
             var tcpClient:TCPClient=TCPClient()
             tcpClient.fd=clientfd
             tcpClient.port=Int(port)
