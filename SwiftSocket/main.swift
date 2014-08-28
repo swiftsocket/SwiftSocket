@@ -27,6 +27,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+import Foundation
 func testclient(){
     //创建socket
     var client:TCPClient = TCPClient(addr: "www.apple.com", port: 80)
@@ -71,6 +72,18 @@ func testserver(){
         println(msg)
     }
 }
-testclient()
-println("end tet client")
-testserver()
+func testchat(){
+    var client:TCPClient = TCPClient(addr: "127.0.0.1", port: 9003)
+    //连接
+    var (success,errmsg)=client.connect(timeout: 1)
+    if success{
+        var cmd:Int32=400
+        var data:NSMutableData=NSMutableData(bytes: &cmd, length: 4)
+        var buff:[Int8] = [Int8](count:16,repeatedValue:0x0)
+        data.getBytes(&buff, length: 4)
+        client.send(data: buff)
+    }else{
+        println(errmsg)
+    }
+}
+testchat()

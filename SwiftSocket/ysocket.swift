@@ -125,7 +125,7 @@ class TCPClient:YSocket{
         if let fd:Int32 = self.fd{
             var buff:[Int8] = [Int8](count:expectlen,repeatedValue:0x0)
             var readLen:Int32=c_ysocket_pull(fd, &buff, Int32(expectlen))
-            var rs=buff[0...Int(readLen)]
+            var rs=buff[0...Int(readLen-1)]
             return Array(rs)
         }
        return nil
