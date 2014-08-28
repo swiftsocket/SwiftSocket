@@ -159,6 +159,15 @@ class TCPServer:YSocket{
         }
         return nil
     }
+    func close()->(Bool,String){
+        if let fd:Int32=self.fd{
+            c_ysocket_close(fd)
+            self.fd=nil
+            return (true,"close success")
+        }else{
+            return (false,"socket not open")
+        }
+    }
 }
 
 
