@@ -41,10 +41,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
-static void signal_function(int signal) {
-    fprintf(stderr, "%s=>singnal:%d\n",__FUNCTION__,signal);
-}
-void socket_set_block(int socket,int on) {
+void ysocket_set_block(int socket,int on) {
     int flags;
     flags = fcntl(socket,F_GETFL,0);
     if (on==0) {
@@ -55,7 +52,6 @@ void socket_set_block(int socket,int on) {
     }
 }
 int ysocket_connect(const char *host,int port,int timeout){
-    signal(SIGPIPE, signal_function);
     struct sockaddr_in sa;
     struct hostent *hp;
     int sockfd = -1;
@@ -67,7 +63,7 @@ int ysocket_connect(const char *host,int port,int timeout){
     sa.sin_family = hp->h_addrtype;
     sa.sin_port = htons(port);
     sockfd = socket(hp->h_addrtype, SOCK_STREAM, 0);
-    socket_set_block(sockfd,0);
+    ysocket_set_block(sockfd,0);
     connect(sockfd, (struct sockaddr *)&sa, sizeof(sa));
     fd_set          fdwrite;
     struct timeval  tvSelect;
@@ -81,7 +77,13 @@ int ysocket_connect(const char *host,int port,int timeout){
     }else if(retval==0){//timeout
         return -3;
     }else{
-        socket_set_block(sockfd, 1);
+        int error=0;
+        int errlen=sizeof(error);
+        getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &error, (socklen_t *)&errlen);
+        if(error!=0){
+            return -4;//connect fail
+        }
+        ysocket_set_block(sockfd, 1);
         int set = 1;
         setsockopt(sockfd, SOL_SOCKET, SO_NOSIGPIPE, (void *)&set, sizeof(int));
         return sockfd;
@@ -91,7 +93,8 @@ int ysocket_close(int socketfd){
     return close(socketfd);
 }
 int ysocket_pull(int socketfd,char *data,int len){
-    return (int)read(socketfd,data,len);
+    int readlen=(int)read(socketfd,data,len);
+    return readlen;
 }
 int ysocket_send(int socketfd,const char *data,int len){
     int byteswrite=0;

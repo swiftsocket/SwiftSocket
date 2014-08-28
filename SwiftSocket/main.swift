@@ -40,7 +40,7 @@ func testclient(){
             //读取数据
             var data=client.read(1024*10)
             if let d=data{
-                if let str=String.stringWithUTF8String(d){
+                if let str=String.stringWithBytes(d, length: d.count, encoding: NSUTF8StringEncoding){
                     println(str)
                 }
             }
@@ -75,13 +75,14 @@ func testserver(){
 func testchat(){
     var client:TCPClient = TCPClient(addr: "127.0.0.1", port: 9003)
     //连接
-    var (success,errmsg)=client.connect(timeout: 1)
+    var (success,errmsg)=client.connect(timeout: 10)
     if success{
-        var cmd:Int32=400
+        var msgtosend=["cmd":"nickname","nickname":"小p"]
+        var msgdata=NSJSONSerialization.dataWithJSONObject(msgtosend, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
+        var cmd:Int32=Int32(msgdata.length)
         var data:NSMutableData=NSMutableData(bytes: &cmd, length: 4)
-        var buff:[Int8] = [Int8](count:16,repeatedValue:0x0)
-        data.getBytes(&buff, length: 4)
-        client.send(data: buff)
+        client.send(data: data)
+        client.send(data:msgdata)
     }else{
         println(errmsg)
     }
