@@ -50,17 +50,17 @@ var client=server.accept() //now you can use client socket api to read and write
 # client socket example
 ``` swift
 //创建socket
-var socket:YSocket = YSocket(addr: "www.google.com", port: 80)
+var client:TCPClient = TCPClient(addr: "www.apple.com", port: 80)
 //连接
-var (success,errmsg)=socket.connect()
+var (success,errmsg)=client.connect(timeout: 1)
 if success{
     //发送数据
-    var (success,errmsg)=socket.send(str:"GET / HTTP/1.0\n\n" )
+    var (success,errmsg)=client.send(str:"GET / HTTP/1.0\n\n" )
     if success{
         //读取数据
-        var data=socket.read(1024*10)
+        var data=client.read(1024*10)
         if let d=data{
-            if let str=String.stringWithUTF8String(d){
+            if let str=String.stringWithBytes(d, length: d.count, encoding: NSUTF8StringEncoding){
                 println(str)
             }
         }
@@ -96,8 +96,9 @@ func testserver(){
     }
 }
 ```
-# license
-bsd license
+
+# Copyright and License
+Code released under the BSD license.
 
 # QQ group
 275935304
