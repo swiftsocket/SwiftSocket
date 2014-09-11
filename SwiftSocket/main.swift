@@ -72,19 +72,4 @@ func testserver(){
         println(msg)
     }
 }
-func testchat(){
-    var client:TCPClient = TCPClient(addr: "127.0.0.1", port: 9003)
-    //连接
-    var (success,errmsg)=client.connect(timeout: 10)
-    if success{
-        var msgtosend=["cmd":"nickname","nickname":"小p"]
-        var msgdata=NSJSONSerialization.dataWithJSONObject(msgtosend, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
-        var cmd:Int32=Int32(msgdata.length)
-        var data:NSMutableData=NSMutableData(bytes: &cmd, length: 4)
-        client.send(data: data)
-        client.send(data:msgdata)
-    }else{
-        println(errmsg)
-    }
-}
-testchat()
+testclient()

@@ -41,7 +41,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
-void ysocket_set_block(int socket,int on) {
+void ytcpsocket_set_block(int socket,int on) {
     int flags;
     flags = fcntl(socket,F_GETFL,0);
     if (on==0) {
@@ -51,7 +51,7 @@ void ysocket_set_block(int socket,int on) {
         fcntl(socket, F_SETFL, flags);
     }
 }
-int ysocket_connect(const char *host,int port,int timeout){
+int ytcpsocket_connect(const char *host,int port,int timeout){
     struct sockaddr_in sa;
     struct hostent *hp;
     int sockfd = -1;
@@ -63,7 +63,7 @@ int ysocket_connect(const char *host,int port,int timeout){
     sa.sin_family = hp->h_addrtype;
     sa.sin_port = htons(port);
     sockfd = socket(hp->h_addrtype, SOCK_STREAM, 0);
-    ysocket_set_block(sockfd,0);
+    ytcpsocket_set_block(sockfd,0);
     connect(sockfd, (struct sockaddr *)&sa, sizeof(sa));
     fd_set          fdwrite;
     struct timeval  tvSelect;
@@ -83,20 +83,20 @@ int ysocket_connect(const char *host,int port,int timeout){
         if(error!=0){
             return -4;//connect fail
         }
-        ysocket_set_block(sockfd, 1);
+        ytcpsocket_set_block(sockfd, 1);
         int set = 1;
         setsockopt(sockfd, SOL_SOCKET, SO_NOSIGPIPE, (void *)&set, sizeof(int));
         return sockfd;
     }
 }
-int ysocket_close(int socketfd){
+int ytcpsocket_close(int socketfd){
     return close(socketfd);
 }
-int ysocket_pull(int socketfd,char *data,int len){
+int ytcpsocket_pull(int socketfd,char *data,int len){
     int readlen=(int)read(socketfd,data,len);
     return readlen;
 }
-int ysocket_send(int socketfd,const char *data,int len){
+int ytcpsocket_send(int socketfd,const char *data,int len){
     int byteswrite=0;
     while (len-byteswrite>0) {
         int writelen=(int)write(socketfd, data+byteswrite, len-byteswrite);
@@ -108,7 +108,7 @@ int ysocket_send(int socketfd,const char *data,int len){
     return byteswrite;
 }
 //return socket fd
-int ysocket_listen(const char *addr,int port){
+int ytcpsocket_listen(const char *addr,int port){
     //create socket
     int socketfd=socket(AF_INET, SOCK_STREAM, 0);
     int reuseon   = 1;
@@ -131,7 +131,7 @@ int ysocket_listen(const char *addr,int port){
     }
 }
 //return client socket fd
-int ysocket_accept(int onsocketfd,char *remoteip,int* remoteport){
+int ytcpsocket_accept(int onsocketfd,char *remoteip,int* remoteport){
     socklen_t clilen;
     struct sockaddr_in  cli_addr;
     clilen = sizeof(cli_addr);

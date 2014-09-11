@@ -29,13 +29,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 import Foundation
 
-@asmname("ysocket_connect") func c_ysocket_connect(host:ConstUnsafePointer<Int8>,port:Int32,timeout:Int32) -> Int32
-@asmname("ysocket_close") func c_ysocket_close(fd:Int32) -> Int32
-@asmname("ysocket_send") func c_ysocket_send(fd:Int32,ConstUnsafePointer<UInt8>,len:Int32) -> Int32
-@asmname("ysocket_pull") func c_ysocket_pull(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32) -> Int32
-@asmname("ysocket_listen") func c_ysocket_listen(addr:ConstUnsafePointer<Int8>,port:Int32)->Int32
-@asmname("ysocket_accept") func c_ysocket_accept(onsocketfd:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
-
+@asmname("ytcpsocket_connect") func c_ytcpsocket_connect(host:ConstUnsafePointer<Int8>,port:Int32,timeout:Int32) -> Int32
+@asmname("ytcpsocket_close") func c_ytcpsocket_close(fd:Int32) -> Int32
+@asmname("ytcpsocket_send") func c_ytcpsocket_send(fd:Int32,ConstUnsafePointer<UInt8>,len:Int32) -> Int32
+@asmname("ytcpsocket_pull") func c_ytcpsocket_pull(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32) -> Int32
+@asmname("ytcpsocket_listen") func c_ytcpsocket_listen(addr:ConstUnsafePointer<Int8>,port:Int32)->Int32
+@asmname("ytcpsocket_accept") func c_ytcpsocket_accept(onsocketfd:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
 class YSocket{
     var addr:String
     var port:Int
@@ -55,7 +54,7 @@ class TCPClient:YSocket{
      * return success or fail with message
      */
     func connect(timeout t:Int)->(Bool,String){
-        var rs:Int32=c_ysocket_connect(self.addr, Int32(self.port),Int32(t))
+        var rs:Int32=c_ytcpsocket_connect(self.addr, Int32(self.port),Int32(t))
         if rs>0{
             self.fd=rs
             return (true,"connect success")
@@ -78,7 +77,7 @@ class TCPClient:YSocket{
     */
     func close()->(Bool,String){
         if let fd:Int32=self.fd{
-            c_ysocket_close(fd)
+            c_ytcpsocket_close(fd)
             self.fd=nil
             return (true,"close success")
         }else{
@@ -91,7 +90,7 @@ class TCPClient:YSocket{
     */
     func send(data d:[UInt8])->(Bool,String){
         if let fd:Int32=self.fd{
-            var sendsize:Int32=c_ysocket_send(fd, d, Int32(d.count))
+            var sendsize:Int32=c_ytcpsocket_send(fd, d, Int32(d.count))
             if Int(sendsize)==d.count{
                return (true,"send success")
             }else{
@@ -107,7 +106,7 @@ class TCPClient:YSocket{
     */
     func send(str s:String)->(Bool,String){
         if let fd:Int32=self.fd{
-            var sendsize:Int32=c_ysocket_send(fd, s, Int32(strlen(s)))
+            var sendsize:Int32=c_ytcpsocket_send(fd, s, Int32(strlen(s)))
             if sendsize==Int32(strlen(s)){
                 return (true,"send success")
             }else{
@@ -125,7 +124,7 @@ class TCPClient:YSocket{
         if let fd:Int32=self.fd{
             var buff:[UInt8] = [UInt8](count:d.length,repeatedValue:0x0)
             d.getBytes(&buff, length: d.length)
-            var sendsize:Int32=c_ysocket_send(fd, buff, Int32(d.length))
+            var sendsize:Int32=c_ytcpsocket_send(fd, buff, Int32(d.length))
             if sendsize==Int32(d.length){
                 return (true,"send success")
             }else{
@@ -142,7 +141,7 @@ class TCPClient:YSocket{
     func read(expectlen:Int)->[UInt8]?{
         if let fd:Int32 = self.fd{
             var buff:[UInt8] = [UInt8](count:expectlen,repeatedValue:0x0)
-            var readLen:Int32=c_ysocket_pull(fd, &buff, Int32(expectlen))
+            var readLen:Int32=c_ytcpsocket_pull(fd, &buff, Int32(expectlen))
             if readLen<=0{
                 return nil
             }
@@ -158,7 +157,7 @@ class TCPServer:YSocket{
 
     func listen()->(Bool,String){
         
-        var fd:Int32=c_ysocket_listen(self.addr, Int32(self.port))
+        var fd:Int32=c_ytcpsocket_listen(self.addr, Int32(self.port))
         if fd>0{
             self.fd=fd
             return (true,"listen success")
@@ -170,7 +169,7 @@ class TCPServer:YSocket{
         if let serferfd=self.fd{
             var buff:[Int8] = [Int8](count:16,repeatedValue:0x0)
             var port:Int32=0
-            var clientfd:Int32=c_ysocket_accept(serferfd, &buff,&port)
+            var clientfd:Int32=c_ytcpsocket_accept(serferfd, &buff,&port)
             if clientfd<0{
                 return nil
             }
@@ -186,7 +185,7 @@ class TCPServer:YSocket{
     }
     func close()->(Bool,String){
         if let fd:Int32=self.fd{
-            c_ysocket_close(fd)
+            c_ytcpsocket_close(fd)
             self.fd=nil
             return (true,"close success")
         }else{

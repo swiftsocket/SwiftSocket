@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		55A676E319A5FFCF00663380 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E019A5FFCF00663380 /* main.swift */; };
-		55A676E419A5FFCF00663380 /* ysocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E119A5FFCF00663380 /* ysocket.c */; };
-		55A676E519A5FFCF00663380 /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E219A5FFCF00663380 /* ysocket.swift */; };
+		55A676E419A5FFCF00663380 /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E119A5FFCF00663380 /* ytcpsocket.c */; };
+		55A676E519A5FFCF00663380 /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E219A5FFCF00663380 /* ytcpsocket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,8 +27,8 @@
 /* Begin PBXFileReference section */
 		5518C82F19A329100049DC22 /* SwiftSocket */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftSocket; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A676E019A5FFCF00663380 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = SwiftSocket/main.swift; sourceTree = SOURCE_ROOT; };
-		55A676E119A5FFCF00663380 /* ysocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ysocket.c; path = SwiftSocket/ysocket.c; sourceTree = SOURCE_ROOT; };
-		55A676E219A5FFCF00663380 /* ysocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ysocket.swift; path = SwiftSocket/ysocket.swift; sourceTree = SOURCE_ROOT; };
+		55A676E119A5FFCF00663380 /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ytcpsocket.c; path = SwiftSocket/ytcpsocket.c; sourceTree = SOURCE_ROOT; };
+		55A676E219A5FFCF00663380 /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ytcpsocket.swift; path = SwiftSocket/ytcpsocket.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +62,8 @@
 			isa = PBXGroup;
 			children = (
 				55A676E019A5FFCF00663380 /* main.swift */,
-				55A676E119A5FFCF00663380 /* ysocket.c */,
-				55A676E219A5FFCF00663380 /* ysocket.swift */,
+				55A676E119A5FFCF00663380 /* ytcpsocket.c */,
+				55A676E219A5FFCF00663380 /* ytcpsocket.swift */,
 			);
 			path = SwiftC;
 			sourceTree = "<group>";
@@ -124,8 +124,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55A676E519A5FFCF00663380 /* ysocket.swift in Sources */,
-				55A676E419A5FFCF00663380 /* ysocket.c in Sources */,
+				55A676E519A5FFCF00663380 /* ytcpsocket.swift in Sources */,
+				55A676E419A5FFCF00663380 /* ytcpsocket.c in Sources */,
 				55A676E319A5FFCF00663380 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
