@@ -90,11 +90,10 @@ func testudpserver(){
             server.close()
             break
         }
-        
     })
 }
 func testudpclient(){
-    var client:UDPClient=UDPClient(addr: "127.0.0.1", port: 8080)
+    var client:UDPClient=UDPClient(addr: "baidu.com", port: 8080)
     println("send hello world")
     client.send(str: "hello world")
     client.close()

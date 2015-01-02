@@ -34,14 +34,23 @@ import Foundation
 @asmname("yudpsocket_recive") func c_yudpsocket_recive(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
 @asmname("yudpsocket_close") func c_yudpsocket_close(fd:Int32) -> Int32
 @asmname("yudpsocket_client") func c_yudpsocket_client() -> Int32
+@asmname("yudpsocket_get_server_ip") func c_yudpsocket_get_server_ip(host:UnsafePointer<Int8>,ip:UnsafePointer<Int8>) -> Int32
 @asmname("yudpsocket_sentto") func c_yudpsocket_sentto(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:Int32) -> Int32
 
 class UDPClient: YSocket {
     override init(addr a:String,port p:Int){
-        super.init(addr: a, port: p)
-        var fd:Int32=c_yudpsocket_client()
-        if fd>0{
-            self.fd=fd
+        super.init()
+        var remoteipbuff:[Int8] = [Int8](count:16,repeatedValue:0x0)
+        var ret=c_yudpsocket_get_server_ip(a, remoteipbuff)
+        if ret==0{
+            if let ip=String(CString: remoteipbuff, encoding: NSUTF8StringEncoding){
+                self.addr=ip
+                self.port=p
+                var fd:Int32=c_yudpsocket_client()
+                if fd>0{
+                    self.fd=fd
+                }
+            }
         }
     }
     /*

@@ -35,6 +35,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include <unistd.h>
+#include <netdb.h>
 #define yudpsocket_buff_len 8192
 
 //return socket fd
@@ -77,9 +78,20 @@ int yudpsocket_client(){
     setsockopt( socketfd, SOL_SOCKET, SO_REUSEADDR, &reuseon, sizeof(reuseon) );
     return socketfd;
 }
+int yudpsocket_get_server_ip(char *host,char *ip){
+    struct hostent *hp;
+    struct sockaddr_in addr;
+    hp = gethostbyname(host);
+    if(hp==NULL){
+        return -1;
+    }
+    bcopy((char *)hp->h_addr, (char *)&addr.sin_addr, hp->h_length);
+    char *clientip=inet_ntoa(addr.sin_addr);
+    memcpy(ip, clientip, strlen(clientip));
+    return 0;
+}
 //send message to addr and port
 int yudpsocket_sentto(int socket_fd,char *msg,int len, char *toaddr, int topotr){
-    
     struct sockaddr_in addr;
     socklen_t addrlen=sizeof(addr);
     memset(&addr, 0x0, sizeof(struct sockaddr_in));
