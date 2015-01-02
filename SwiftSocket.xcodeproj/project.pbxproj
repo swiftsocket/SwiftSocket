@@ -12,6 +12,7 @@
 		55A676E319A5FFCF00663380 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E019A5FFCF00663380 /* main.swift */; };
 		55A676E419A5FFCF00663380 /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E119A5FFCF00663380 /* ytcpsocket.c */; };
 		55A676E519A5FFCF00663380 /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E219A5FFCF00663380 /* ytcpsocket.swift */; };
+		D43083761A56187A004DE4D4 /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43083751A56187A004DE4D4 /* ysocket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		55A676E019A5FFCF00663380 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = SwiftSocket/main.swift; sourceTree = SOURCE_ROOT; };
 		55A676E119A5FFCF00663380 /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ytcpsocket.c; path = SwiftSocket/ytcpsocket.c; sourceTree = SOURCE_ROOT; };
 		55A676E219A5FFCF00663380 /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ytcpsocket.swift; path = SwiftSocket/ytcpsocket.swift; sourceTree = SOURCE_ROOT; };
+		D43083751A56187A004DE4D4 /* ysocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ysocket.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				55A676E219A5FFCF00663380 /* ytcpsocket.swift */,
 				04E889D81A0F516800B47412 /* yudpsocket.c */,
 				04E889D91A0F516800B47412 /* yudpsocket.swift */,
+				D43083751A56187A004DE4D4 /* ysocket.swift */,
 			);
 			path = SwiftC;
 			sourceTree = "<group>";
@@ -130,6 +133,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D43083761A56187A004DE4D4 /* ysocket.swift in Sources */,
 				04E889DA1A0F516800B47412 /* yudpsocket.c in Sources */,
 				04E889DB1A0F516800B47412 /* yudpsocket.swift in Sources */,
 				55A676E519A5FFCF00663380 /* ytcpsocket.swift in Sources */,
