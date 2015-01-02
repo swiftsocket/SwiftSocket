@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import Foundation
-class YSocket{
+public class YSocket{
     var addr:String
     var port:Int
     var fd:Int32?
@@ -37,7 +37,7 @@ class YSocket{
         self.addr=""
         self.port=0
     }
-    init(addr a:String,port p:Int){
+    public init(addr a:String,port p:Int){
         self.addr=a
         self.port=p
     }

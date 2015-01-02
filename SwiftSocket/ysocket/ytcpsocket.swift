@@ -36,12 +36,12 @@ import Foundation
 @asmname("ytcpsocket_listen") func c_ytcpsocket_listen(addr:UnsafePointer<Int8>,port:Int32)->Int32
 @asmname("ytcpsocket_accept") func c_ytcpsocket_accept(onsocketfd:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
 
-class TCPClient:YSocket{
+public class TCPClient:YSocket{
     /*
      * connect to server
      * return success or fail with message
      */
-    func connect(timeout t:Int)->(Bool,String){
+    public func connect(timeout t:Int)->(Bool,String){
         var rs:Int32=c_ytcpsocket_connect(self.addr, Int32(self.port),Int32(t))
         if rs>0{
             self.fd=rs
@@ -63,7 +63,7 @@ class TCPClient:YSocket{
     * close socket
     * return success or fail with message
     */
-    func close()->(Bool,String){
+    public func close()->(Bool,String){
         if let fd:Int32=self.fd{
             c_ytcpsocket_close(fd)
             self.fd=nil
@@ -76,7 +76,7 @@ class TCPClient:YSocket{
     * send data
     * return success or fail with message
     */
-    func send(data d:[UInt8])->(Bool,String){
+    public func send(data d:[UInt8])->(Bool,String){
         if let fd:Int32=self.fd{
             var sendsize:Int32=c_ytcpsocket_send(fd, d, Int32(d.count))
             if Int(sendsize)==d.count{
@@ -92,7 +92,7 @@ class TCPClient:YSocket{
     * send string
     * return success or fail with message
     */
-    func send(str s:String)->(Bool,String){
+    public func send(str s:String)->(Bool,String){
         if let fd:Int32=self.fd{
             var sendsize:Int32=c_ytcpsocket_send(fd, s, Int32(strlen(s)))
             if sendsize==Int32(strlen(s)){
@@ -108,7 +108,7 @@ class TCPClient:YSocket{
     *
     * send nsdata
     */
-    func send(data d:NSData)->(Bool,String){
+    public func send(data d:NSData)->(Bool,String){
         if let fd:Int32=self.fd{
             var buff:[UInt8] = [UInt8](count:d.length,repeatedValue:0x0)
             d.getBytes(&buff, length: d.length)
@@ -126,7 +126,7 @@ class TCPClient:YSocket{
     * read data with expect length
     * return success or fail with message
     */
-    func read(expectlen:Int)->[UInt8]?{
+    public func read(expectlen:Int)->[UInt8]?{
         if let fd:Int32 = self.fd{
             var buff:[UInt8] = [UInt8](count:expectlen,repeatedValue:0x0)
             var readLen:Int32=c_ytcpsocket_pull(fd, &buff, Int32(expectlen))
@@ -141,9 +141,9 @@ class TCPClient:YSocket{
     }
 }
 
-class TCPServer:YSocket{
+public class TCPServer:YSocket{
 
-    func listen()->(Bool,String){
+    public func listen()->(Bool,String){
         
         var fd:Int32=c_ytcpsocket_listen(self.addr, Int32(self.port))
         if fd>0{
@@ -153,7 +153,7 @@ class TCPServer:YSocket{
             return (false,"listen fail")
         }
     }
-    func accept()->TCPClient?{
+    public func accept()->TCPClient?{
         if let serferfd=self.fd{
             var buff:[Int8] = [Int8](count:16,repeatedValue:0x0)
             var port:Int32=0
@@ -171,7 +171,7 @@ class TCPServer:YSocket{
         }
         return nil
     }
-    func close()->(Bool,String){
+    public func close()->(Bool,String){
         if let fd:Int32=self.fd{
             c_ytcpsocket_close(fd)
             self.fd=nil

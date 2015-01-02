@@ -37,8 +37,8 @@ import Foundation
 @asmname("yudpsocket_get_server_ip") func c_yudpsocket_get_server_ip(host:UnsafePointer<Int8>,ip:UnsafePointer<Int8>) -> Int32
 @asmname("yudpsocket_sentto") func c_yudpsocket_sentto(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:Int32) -> Int32
 
-class UDPClient: YSocket {
-    override init(addr a:String,port p:Int){
+public class UDPClient: YSocket {
+    public override init(addr a:String,port p:Int){
         super.init()
         var remoteipbuff:[Int8] = [Int8](count:16,repeatedValue:0x0)
         var ret=c_yudpsocket_get_server_ip(a, remoteipbuff)
@@ -57,7 +57,7 @@ class UDPClient: YSocket {
     * send data
     * return success or fail with message
     */
-    func send(data d:[UInt8])->(Bool,String){
+    public func send(data d:[UInt8])->(Bool,String){
         if let fd:Int32=self.fd{
             var sendsize:Int32=c_yudpsocket_sentto(fd, d, Int32(d.count), self.addr,Int32(self.port))
             if Int(sendsize)==d.count{
@@ -73,7 +73,7 @@ class UDPClient: YSocket {
     * send string
     * return success or fail with message
     */
-    func send(str s:String)->(Bool,String){
+    public func send(str s:String)->(Bool,String){
         if let fd:Int32=self.fd{
             var sendsize:Int32=c_yudpsocket_sentto(fd, s, Int32(strlen(s)), self.addr,Int32(self.port))
             if sendsize==Int32(strlen(s)){
@@ -89,7 +89,7 @@ class UDPClient: YSocket {
     *
     * send nsdata
     */
-    func send(data d:NSData)->(Bool,String){
+    public func send(data d:NSData)->(Bool,String){
         if let fd:Int32=self.fd{
             var buff:[UInt8] = [UInt8](count:d.length,repeatedValue:0x0)
             d.getBytes(&buff, length: d.length)
@@ -103,7 +103,7 @@ class UDPClient: YSocket {
             return (false,"socket not open")
         }
     }
-    func close()->(Bool,String){
+    public func close()->(Bool,String){
         if let fd:Int32=self.fd{
             c_yudpsocket_close(fd)
             self.fd=nil
@@ -115,8 +115,8 @@ class UDPClient: YSocket {
     //TODO add multycast and boardcast
 }
 
-class UDPServer:YSocket{
-    override init(addr a:String,port p:Int){
+public class UDPServer:YSocket{
+    public override init(addr a:String,port p:Int){
         super.init(addr: a, port: p)
         var fd:Int32 = c_yudpsocket_server(self.addr, Int32(self.port))
         if fd>0{
@@ -124,7 +124,7 @@ class UDPServer:YSocket{
         }
     }
     //TODO add multycast and boardcast
-    func recv(expectlen:Int)->([UInt8]?,String,Int){
+    public func recv(expectlen:Int)->([UInt8]?,String,Int){
         if let fd:Int32 = self.fd{
             var buff:[UInt8] = [UInt8](count:expectlen,repeatedValue:0x0)
             var remoteipbuff:[Int8] = [Int8](count:16,repeatedValue:0x0)
@@ -144,7 +144,7 @@ class UDPServer:YSocket{
         }
         return (nil,"no ip",0)
     }
-    func close()->(Bool,String){
+    public func close()->(Bool,String){
         if let fd:Int32=self.fd{
             c_yudpsocket_close(fd)
             self.fd=nil
