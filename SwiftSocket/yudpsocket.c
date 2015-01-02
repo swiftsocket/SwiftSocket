@@ -79,13 +79,15 @@ int yudpsocket_client(){
 }
 //send message to addr and port
 int yudpsocket_sentto(int socket_fd,char *msg,int len, char *toaddr, int topotr){
-    socklen_t addrlen;
+    
     struct sockaddr_in addr;
+    socklen_t addrlen=sizeof(addr);
     memset(&addr, 0x0, sizeof(struct sockaddr_in));
     addr.sin_family=AF_INET;
-    addr.sin_port=topotr;
+    addr.sin_port=htons(topotr);
     addr.sin_addr.s_addr=inet_addr(toaddr);
-    return (int)sendto(socket_fd, msg, len, 0, (struct sockaddr *)&addr, addrlen);
+    int sendlen=(int)sendto(socket_fd, msg, len, 0, (struct sockaddr *)&addr, addrlen);
+    return sendlen;
 }
 
 

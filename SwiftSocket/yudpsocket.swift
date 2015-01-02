@@ -37,6 +37,13 @@ import Foundation
 @asmname("yudpsocket_sentto") func c_yudpsocket_sentto(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:Int32) -> Int32
 
 class UDPClient: YSocket {
+    override init(addr a:String,port p:Int){
+        super.init(addr: a, port: p)
+        var fd:Int32=c_yudpsocket_client()
+        if fd>0{
+            self.fd=fd
+        }
+    }
     /*
     * send data
     * return success or fail with message
@@ -99,14 +106,14 @@ class UDPClient: YSocket {
 }
 
 class UDPServer:YSocket{
-    func listen()->(Bool,String){
+    override init(addr a:String,port p:Int){
+        super.init(addr: a, port: p)
         var fd:Int32 = c_yudpsocket_server(self.addr, Int32(self.port))
         if fd>0{
             self.fd=fd
-            return (true,"listen success")
         }
-        return (false,"listen fail")
     }
+    
     func recv(expectlen:Int)->([UInt8]?,String,Int){
         if let fd:Int32 = self.fd{
             var buff:[UInt8] = [UInt8](count:expectlen,repeatedValue:0x0)
@@ -125,7 +132,7 @@ class UDPServer:YSocket{
             var data:[UInt8] = Array(rs)
             return (data,addr,port)
         }
-        return (nil,"",0)
+        return (nil,"no ip",0)
     }
     func close()->(Bool,String){
         if let fd:Int32=self.fd{

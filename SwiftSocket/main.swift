@@ -28,7 +28,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 import Foundation
-func testclient(){
+import Darwin.C
+func testtcpclient(){
     //创建socket
     var client:TCPClient = TCPClient(addr: "ixy.io", port: 80)
     //连接
@@ -57,7 +58,7 @@ func echoService(client c:TCPClient){
     c.send(data: d!)
     c.close()
 }
-func testserver(){
+func testtcpserver(){
     var server:TCPServer = TCPServer(addr: "127.0.0.1", port: 8080)
     var (success,msg)=server.listen()
     if success{
@@ -74,8 +75,33 @@ func testserver(){
 }
 //testclient()
 func testudpserver(){
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+        var server:UDPServer=UDPServer(addr:"127.0.0.1",port:8080)
+        var run:Bool=true
+        while run{
+            var (data,remoteip,remoteport)=server.recv(1024)
+            println("recive")
+            if let d=data{
+                if let str=String(bytes: d, encoding: NSUTF8StringEncoding){
+                    println(str)
+                }
+            }
+            println(remoteip)
+            server.close()
+            break
+        }
+        
+    })
 }
-func testtcpserver(){
-    
+func testudpclient(){
+    var client:UDPClient=UDPClient(addr: "127.0.0.1", port: 8080)
+    println("send hello world")
+    client.send(str: "hello world")
+    client.close()
 }
+testudpserver()
+testudpclient()
+
+var stdinput=NSFileHandle.fileHandleWithStandardInput()
+stdinput.readDataToEndOfFile()
+
