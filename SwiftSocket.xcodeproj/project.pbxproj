@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04E889DA1A0F516800B47412 /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 04E889D81A0F516800B47412 /* yudpsocket.c */; };
-		04E889DB1A0F516800B47412 /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E889D91A0F516800B47412 /* yudpsocket.swift */; };
 		55A676E319A5FFCF00663380 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E019A5FFCF00663380 /* main.swift */; };
-		55A676E419A5FFCF00663380 /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E119A5FFCF00663380 /* ytcpsocket.c */; };
-		55A676E519A5FFCF00663380 /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A676E219A5FFCF00663380 /* ytcpsocket.swift */; };
-		D43083761A56187A004DE4D4 /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43083751A56187A004DE4D4 /* ysocket.swift */; };
+		D430837D1A565F29004DE4D4 /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43083781A565EBF004DE4D4 /* ysocket.swift */; };
+		D430837E1A565F29004DE4D4 /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = D43083791A565EBF004DE4D4 /* ytcpsocket.c */; };
+		D430837F1A565F29004DE4D4 /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430837A1A565EBF004DE4D4 /* ytcpsocket.swift */; };
+		D43083801A565F29004DE4D4 /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = D430837B1A565EBF004DE4D4 /* yudpsocket.c */; };
+		D43083811A565F29004DE4D4 /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430837C1A565EBF004DE4D4 /* yudpsocket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,13 +28,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		04E889D81A0F516800B47412 /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = yudpsocket.c; path = SwiftSocket/yudpsocket.c; sourceTree = SOURCE_ROOT; };
-		04E889D91A0F516800B47412 /* yudpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = yudpsocket.swift; path = SwiftSocket/yudpsocket.swift; sourceTree = SOURCE_ROOT; };
 		5518C82F19A329100049DC22 /* SwiftSocket */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftSocket; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A676E019A5FFCF00663380 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = SwiftSocket/main.swift; sourceTree = SOURCE_ROOT; };
-		55A676E119A5FFCF00663380 /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ytcpsocket.c; path = SwiftSocket/ytcpsocket.c; sourceTree = SOURCE_ROOT; };
-		55A676E219A5FFCF00663380 /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ytcpsocket.swift; path = SwiftSocket/ytcpsocket.swift; sourceTree = SOURCE_ROOT; };
-		D43083751A56187A004DE4D4 /* ysocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ysocket.swift; sourceTree = SOURCE_ROOT; };
+		D43083781A565EBF004DE4D4 /* ysocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ysocket.swift; sourceTree = "<group>"; };
+		D43083791A565EBF004DE4D4 /* ytcpsocket.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ytcpsocket.c; sourceTree = "<group>"; };
+		D430837A1A565EBF004DE4D4 /* ytcpsocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ytcpsocket.swift; sourceTree = "<group>"; };
+		D430837B1A565EBF004DE4D4 /* yudpsocket.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = yudpsocket.c; sourceTree = "<group>"; };
+		D430837C1A565EBF004DE4D4 /* yudpsocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = yudpsocket.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,15 +67,24 @@
 		5518C83119A329100049DC22 /* SwiftC */ = {
 			isa = PBXGroup;
 			children = (
+				D43083771A565EBF004DE4D4 /* ysocket */,
 				55A676E019A5FFCF00663380 /* main.swift */,
-				55A676E119A5FFCF00663380 /* ytcpsocket.c */,
-				55A676E219A5FFCF00663380 /* ytcpsocket.swift */,
-				04E889D81A0F516800B47412 /* yudpsocket.c */,
-				04E889D91A0F516800B47412 /* yudpsocket.swift */,
-				D43083751A56187A004DE4D4 /* ysocket.swift */,
 			);
 			path = SwiftC;
 			sourceTree = "<group>";
+		};
+		D43083771A565EBF004DE4D4 /* ysocket */ = {
+			isa = PBXGroup;
+			children = (
+				D43083781A565EBF004DE4D4 /* ysocket.swift */,
+				D43083791A565EBF004DE4D4 /* ytcpsocket.c */,
+				D430837A1A565EBF004DE4D4 /* ytcpsocket.swift */,
+				D430837B1A565EBF004DE4D4 /* yudpsocket.c */,
+				D430837C1A565EBF004DE4D4 /* yudpsocket.swift */,
+			);
+			name = ysocket;
+			path = SwiftSocket/ysocket;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -133,11 +142,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D43083761A56187A004DE4D4 /* ysocket.swift in Sources */,
-				04E889DA1A0F516800B47412 /* yudpsocket.c in Sources */,
-				04E889DB1A0F516800B47412 /* yudpsocket.swift in Sources */,
-				55A676E519A5FFCF00663380 /* ytcpsocket.swift in Sources */,
-				55A676E419A5FFCF00663380 /* ytcpsocket.c in Sources */,
+				D430837D1A565F29004DE4D4 /* ysocket.swift in Sources */,
+				D430837E1A565F29004DE4D4 /* ytcpsocket.c in Sources */,
+				D430837F1A565F29004DE4D4 /* ytcpsocket.swift in Sources */,
+				D43083801A565F29004DE4D4 /* yudpsocket.c in Sources */,
+				D43083811A565F29004DE4D4 /* yudpsocket.swift in Sources */,
 				55A676E319A5FFCF00663380 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
