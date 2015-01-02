@@ -19,6 +19,12 @@
 		D43083A21A565F9F004DE4D4 /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430837A1A565EBF004DE4D4 /* ytcpsocket.swift */; };
 		D43083A31A565F9F004DE4D4 /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = D430837B1A565EBF004DE4D4 /* yudpsocket.c */; };
 		D43083A41A565F9F004DE4D4 /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430837C1A565EBF004DE4D4 /* yudpsocket.swift */; };
+		D4F0E40A1A5661260085C247 /* ysocketOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = D4F0E4091A5661260085C247 /* ysocketOSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4F0E41E1A56613C0085C247 /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43083781A565EBF004DE4D4 /* ysocket.swift */; };
+		D4F0E41F1A56613C0085C247 /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = D43083791A565EBF004DE4D4 /* ytcpsocket.c */; };
+		D4F0E4201A56613C0085C247 /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430837A1A565EBF004DE4D4 /* ytcpsocket.swift */; };
+		D4F0E4211A56613C0085C247 /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = D430837B1A565EBF004DE4D4 /* yudpsocket.c */; };
+		D4F0E4221A56613C0085C247 /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D430837C1A565EBF004DE4D4 /* yudpsocket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +50,9 @@
 		D43083871A565F7F004DE4D4 /* ysocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ysocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D430838A1A565F7F004DE4D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D430838B1A565F7F004DE4D4 /* ysocket-ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ysocket-ios.h"; sourceTree = "<group>"; };
+		D4F0E4051A5661260085C247 /* ysocketOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ysocketOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4F0E4081A5661260085C247 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4F0E4091A5661260085C247 /* ysocketOSX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ysocketOSX.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +70,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D4F0E4011A5661260085C247 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -69,6 +85,7 @@
 			children = (
 				5518C83119A329100049DC22 /* SwiftC */,
 				D43083881A565F7F004DE4D4 /* ysocket */,
+				D4F0E4061A5661260085C247 /* ysocketOSX */,
 				5518C83019A329100049DC22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,6 +95,7 @@
 			children = (
 				5518C82F19A329100049DC22 /* SwiftSocket */,
 				D43083871A565F7F004DE4D4 /* ysocket.framework */,
+				D4F0E4051A5661260085C247 /* ysocketOSX.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,6 +140,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D4F0E4061A5661260085C247 /* ysocketOSX */ = {
+			isa = PBXGroup;
+			children = (
+				D4F0E4091A5661260085C247 /* ysocketOSX.h */,
+				D4F0E4071A5661260085C247 /* Supporting Files */,
+			);
+			path = ysocketOSX;
+			sourceTree = "<group>";
+		};
+		D4F0E4071A5661260085C247 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D4F0E4081A5661260085C247 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -130,6 +165,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D430838C1A565F7F004DE4D4 /* ysocket-ios.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4F0E4021A5661260085C247 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4F0E40A1A5661260085C247 /* ysocketOSX.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +214,24 @@
 			productReference = D43083871A565F7F004DE4D4 /* ysocket.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		D4F0E4041A5661260085C247 /* ysocketOSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4F0E4181A5661260085C247 /* Build configuration list for PBXNativeTarget "ysocketOSX" */;
+			buildPhases = (
+				D4F0E4001A5661260085C247 /* Sources */,
+				D4F0E4011A5661260085C247 /* Frameworks */,
+				D4F0E4021A5661260085C247 /* Headers */,
+				D4F0E4031A5661260085C247 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ysocketOSX;
+			productName = ysocketOSX;
+			productReference = D4F0E4051A5661260085C247 /* ysocketOSX.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -184,6 +245,9 @@
 						CreatedOnToolsVersion = 6.0;
 					};
 					D43083861A565F7F004DE4D4 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					D4F0E4041A5661260085C247 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
@@ -202,12 +266,20 @@
 			targets = (
 				5518C82E19A329100049DC22 /* SwiftSocket */,
 				D43083861A565F7F004DE4D4 /* ysocket */,
+				D4F0E4041A5661260085C247 /* ysocketOSX */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D43083851A565F7F004DE4D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4F0E4031A5661260085C247 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -239,6 +311,18 @@
 				D43083A21A565F9F004DE4D4 /* ytcpsocket.swift in Sources */,
 				D43083A31A565F9F004DE4D4 /* yudpsocket.c in Sources */,
 				D43083A41A565F9F004DE4D4 /* yudpsocket.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4F0E4001A5661260085C247 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4F0E41E1A56613C0085C247 /* ysocket.swift in Sources */,
+				D4F0E41F1A56613C0085C247 /* ytcpsocket.c in Sources */,
+				D4F0E4201A56613C0085C247 /* ytcpsocket.swift in Sources */,
+				D4F0E4211A56613C0085C247 /* yudpsocket.c in Sources */,
+				D4F0E4221A56613C0085C247 /* yudpsocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +474,52 @@
 			};
 			name = Release;
 		};
+		D4F0E4191A5661260085C247 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = ysocketOSX/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D4F0E41A1A5661260085C247 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = ysocketOSX/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -419,6 +549,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D4F0E4181A5661260085C247 /* Build configuration list for PBXNativeTarget "ysocketOSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4F0E4191A5661260085C247 /* Debug */,
+				D4F0E41A1A5661260085C247 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
