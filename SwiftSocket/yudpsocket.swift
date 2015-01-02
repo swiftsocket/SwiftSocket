@@ -112,6 +112,7 @@ class UDPClient: YSocket {
             return (false,"socket not open")
         }
     }
+    //TODO add multycast and boardcast
 }
 
 class UDPServer:YSocket{
@@ -122,7 +123,7 @@ class UDPServer:YSocket{
             self.fd=fd
         }
     }
-    
+    //TODO add multycast and boardcast
     func recv(expectlen:Int)->([UInt8]?,String,Int){
         if let fd:Int32 = self.fd{
             var buff:[UInt8] = [UInt8](count:expectlen,repeatedValue:0x0)
