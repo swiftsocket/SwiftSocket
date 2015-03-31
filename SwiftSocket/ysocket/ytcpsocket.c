@@ -73,14 +73,17 @@ int ytcpsocket_connect(const char *host,int port,int timeout){
     tvSelect.tv_usec = 0;
     int retval = select(sockfd + 1,NULL, &fdwrite, NULL, &tvSelect);
     if (retval<0) {
+        close(sockfd);
         return -2;
     }else if(retval==0){//timeout
+        close(sockfd);
         return -3;
     }else{
         int error=0;
         int errlen=sizeof(error);
         getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &error, (socklen_t *)&errlen);
         if(error!=0){
+            close(sockfd);
             return -4;//connect fail
         }
         ytcpsocket_set_block(sockfd, 1);
