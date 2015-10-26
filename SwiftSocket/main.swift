@@ -31,7 +31,7 @@ import Foundation
 import Darwin.C
 func testtcpclient(){
     //创建socket
-    var client:TCPClient = TCPClient(addr: "ixy.io", port: 80)
+    let client:TCPClient = TCPClient(addr: "ixy.io", port: 80)
     //连接
     var (success,errmsg)=client.connect(timeout: 1)
     if success{
@@ -39,62 +39,62 @@ func testtcpclient(){
         var (success,errmsg)=client.send(str:"GET / HTTP/1.0\n\n" )
         if success{
             //读取数据
-            var data=client.read(1024*10)
+            let data=client.read(1024*10)
             if let d=data{
                 if let str=String(bytes: d, encoding: NSUTF8StringEncoding){
-                    println(str)
+                    print(str)
                 }
             }
         }else{
-            println(errmsg)
+            print(errmsg)
         }
     }else{
-        println(errmsg)
+        print(errmsg)
     }
 }
 func echoService(client c:TCPClient){
-    println("newclient from:\(c.addr)[\(c.port)]")
-    var d=c.read(1024*10)
+    print("newclient from:\(c.addr)[\(c.port)]")
+    let d=c.read(1024*10)
     c.send(data: d!)
     c.close()
 }
 func testtcpserver(){
-    var server:TCPServer = TCPServer(addr: "127.0.0.1", port: 8080)
+    let server:TCPServer = TCPServer(addr: "127.0.0.1", port: 8080)
     var (success,msg)=server.listen()
     if success{
         while true{
-            if var client=server.accept(){
+            if let client=server.accept(){
                 echoService(client: client)
             }else{
-                println("accept error")
+                print("accept error")
             }
         }
     }else{
-        println(msg)
+        print(msg)
     }
 }
 //testclient()
 func testudpserver(){
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
-        var server:UDPServer=UDPServer(addr:"127.0.0.1",port:8080)
-        var run:Bool=true
+        let server:UDPServer=UDPServer(addr:"127.0.0.1",port:8080)
+        let run:Bool=true
         while run{
             var (data,remoteip,remoteport)=server.recv(1024)
-            println("recive")
+            print("recive")
             if let d=data{
                 if let str=String(bytes: d, encoding: NSUTF8StringEncoding){
-                    println(str)
+                    print(str)
                 }
             }
-            println(remoteip)
+            print(remoteip)
             server.close()
             break
         }
     })
 }
 func testudpclient(){
-    var client:UDPClient=UDPClient(addr: "localhost", port: 8080)
-    println("send hello world")
+    let client:UDPClient=UDPClient(addr: "localhost", port: 8080)
+    print("send hello world")
     client.send(str: "hello world")
     client.close()
 }

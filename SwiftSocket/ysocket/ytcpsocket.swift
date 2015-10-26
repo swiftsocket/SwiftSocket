@@ -32,7 +32,7 @@ import Foundation
 @asmname("ytcpsocket_connect") func c_ytcpsocket_connect(host:UnsafePointer<Int8>,port:Int32,timeout:Int32) -> Int32
 @asmname("ytcpsocket_close") func c_ytcpsocket_close(fd:Int32) -> Int32
 @asmname("ytcpsocket_send") func c_ytcpsocket_send(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32) -> Int32
-@asmname("ytcpsocket_pull") func c_ytcpsocket_pull(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32) -> Int32
+@asmname("ytcpsocket_pull") func c_ytcpsocket_pull(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,timeout:Int32) -> Int32
 @asmname("ytcpsocket_listen") func c_ytcpsocket_listen(addr:UnsafePointer<Int8>,port:Int32)->Int32
 @asmname("ytcpsocket_accept") func c_ytcpsocket_accept(onsocketfd:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
 
@@ -126,10 +126,10 @@ public class TCPClient:YSocket{
     * read data with expect length
     * return success or fail with message
     */
-    public func read(expectlen:Int)->[UInt8]?{
+    public func read(expectlen:Int, timeout:Int = -1)->[UInt8]?{
         if let fd:Int32 = self.fd{
             var buff:[UInt8] = [UInt8](count:expectlen,repeatedValue:0x0)
-            let readLen:Int32=c_ytcpsocket_pull(fd, buff: &buff, len: Int32(expectlen))
+            let readLen:Int32=c_ytcpsocket_pull(fd, buff: &buff, len: Int32(expectlen), timeout: Int32(timeout))
             if readLen<=0{
                 return nil
             }
