@@ -41,6 +41,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
+#include <sys/select.h>
 void ytcpsocket_set_block(int socket,int on) {
     int flags;
     flags = fcntl(socket,F_GETFL,0);
@@ -95,7 +96,19 @@ int ytcpsocket_connect(const char *host,int port,int timeout){
 int ytcpsocket_close(int socketfd){
     return close(socketfd);
 }
-int ytcpsocket_pull(int socketfd,char *data,int len){
+int ytcpsocket_pull(int socketfd,char *data,int len,int timeout_sec){
+    if (timeout_sec>0) {
+        fd_set fdset;
+        struct timeval timeout;
+        timeout.tv_usec = 0;
+        timeout.tv_sec = timeout_sec;
+        FD_ZERO(&fdset);
+        FD_SET(socketfd, &fdset);
+        int ret = select(socketfd+1, &fdset, NULL, NULL, &timeout);
+        if (ret<=0) {
+            return ret; // select-call failed or timeout occurred (before anything was sent)
+        }
+    }
     int readlen=(int)read(socketfd,data,len);
     return readlen;
 }
