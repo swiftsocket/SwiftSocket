@@ -1,5 +1,5 @@
 # a simple socket library for apple swift lang
-# useage
+# usage
 > drag ysocket.c and ysocket.swift to your project
 > just use apis in YSocket class
 
@@ -72,7 +72,7 @@ if success {
 }
 ```
 
-# server socket excample(echo server)
+# server socket example (echo server)
 ``` swift
 func echoService(client c:TCPClient) {
     println("newclient from:\(c.addr)[\(c.port)]")
