@@ -43,14 +43,26 @@ int yudpsocket_server(const char *addr,int port){
     //create socket
     int socketfd=socket(AF_INET, SOCK_DGRAM, 0);
     int reuseon   = 1;
-    setsockopt( socketfd, SOL_SOCKET, SO_REUSEADDR, &reuseon, sizeof(reuseon) );
+    int r = -1;
     //bind
     struct sockaddr_in serv_addr;
-    memset( &serv_addr, '\0', sizeof(serv_addr));
+    serv_addr.sin_len    = sizeof(struct sockaddr_in);
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = inet_addr(addr);
-    serv_addr.sin_port = htons(port);
-    int r=bind(socketfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
+    if(addr == NULL || strlen(addr) == 0 || strcmp(addr, "255.255.255.255") == 0)
+    {
+        r = setsockopt( socketfd, SOL_SOCKET, SO_BROADCAST, &reuseon, sizeof(reuseon) );
+        serv_addr.sin_port        = htons(port);
+        serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    }else{
+        r = setsockopt( socketfd, SOL_SOCKET, SO_REUSEADDR, &reuseon, sizeof(reuseon) );
+        serv_addr.sin_addr.s_addr = inet_addr(addr);
+        serv_addr.sin_port = htons(port);
+        memset( &serv_addr, '\0', sizeof(serv_addr));
+    }
+    if(r==-1){
+       return -1;
+    }
+    r=bind(socketfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
     if(r==0){
         return socketfd;
     }else{
@@ -77,6 +89,11 @@ int yudpsocket_client(){
     int reuseon   = 1;
     setsockopt( socketfd, SOL_SOCKET, SO_REUSEADDR, &reuseon, sizeof(reuseon) );
     return socketfd;
+}
+//enable broadcast
+void enable_broadcast(int socket_fd){
+    int reuseon   = 1;
+    setsockopt( socket_fd, SOL_SOCKET, SO_BROADCAST, &reuseon, sizeof(reuseon) );
 }
 int yudpsocket_get_server_ip(char *host,char *ip){
     struct hostent *hp;

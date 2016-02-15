@@ -98,8 +98,41 @@ func testudpclient(){
     client.send(str: "hello world")
     client.close()
 }
-testudpserver()
-testudpclient()
+//testudpBroadcastclient()
+func testudpBroadcastserver(){
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+        //turn the server to broadcast mode with the address 255.255.255.255 or empty string
+        let server:UDPServer=UDPServer(addr:"",port:8080)
+        let run:Bool=true
+        print("server.started")
+        while run{
+            let (data,remoteip,remoteport)=server.recv(1024)
+            print("recive\(remoteip);\(remoteport)")
+            if let d=data{
+                if let str=String(bytes: d, encoding: NSUTF8StringEncoding){
+                    print(str)
+                }
+            }
+            print(remoteip)
+        }
+        print("server.close")
+        server.close()
+    })
+}
+func testudpBroadcastclient(){
+    //wait a few second till server will ready
+    sleep(2)
+    print("Broadcastclient.send...")
+    let clientB:UDPClient = UDPClient(addr: "255.255.255.255", port: 8080)
+    clientB.enableBroadcast()
+    clientB.send(str: "test hello from broadcast")
+    clientB.close()
+}
+//testudpserver()
+//testudpclient()
+
+testudpBroadcastserver()
+testudpBroadcastclient()
 
 var stdinput=NSFileHandle.fileHandleWithStandardInput()
 stdinput.readDataToEndOfFile()

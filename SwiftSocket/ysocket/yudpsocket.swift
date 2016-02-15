@@ -36,6 +36,7 @@ import Foundation
 @asmname("yudpsocket_client") func c_yudpsocket_client() -> Int32
 @asmname("yudpsocket_get_server_ip") func c_yudpsocket_get_server_ip(host:UnsafePointer<Int8>,ip:UnsafePointer<Int8>) -> Int32
 @asmname("yudpsocket_sentto") func c_yudpsocket_sentto(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:Int32) -> Int32
+@asmname("enable_broadcast") func c_enable_broadcast(fd:Int32)
 
 public class UDPClient: YSocket {
     public override init(addr a:String,port p:Int){
@@ -83,6 +84,15 @@ public class UDPClient: YSocket {
             }
         }else{
             return (false,"socket not open")
+        }
+    }
+    /*
+    * enableBroadcast
+    */
+    public func enableBroadcast(){
+        if let fd:Int32=self.fd{
+            c_enable_broadcast(fd)
+
         }
     }
     /*
