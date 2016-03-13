@@ -30,13 +30,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-@asmname("yudpsocket_server") func c_yudpsocket_server(host:UnsafePointer<Int8>,port:Int32) -> Int32
-@asmname("yudpsocket_recive") func c_yudpsocket_recive(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
-@asmname("yudpsocket_close") func c_yudpsocket_close(fd:Int32) -> Int32
-@asmname("yudpsocket_client") func c_yudpsocket_client() -> Int32
-@asmname("yudpsocket_get_server_ip") func c_yudpsocket_get_server_ip(host:UnsafePointer<Int8>,ip:UnsafePointer<Int8>) -> Int32
-@asmname("yudpsocket_sentto") func c_yudpsocket_sentto(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:Int32) -> Int32
-@asmname("enable_broadcast") func c_enable_broadcast(fd:Int32)
+@_silgen_name("yudpsocket_server") func c_yudpsocket_server(host:UnsafePointer<Int8>,port:Int32) -> Int32
+@_silgen_name("yudpsocket_recive") func c_yudpsocket_recive(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
+@_silgen_name("yudpsocket_close") func c_yudpsocket_close(fd:Int32) -> Int32
+@_silgen_name("yudpsocket_client") func c_yudpsocket_client() -> Int32
+@_silgen_name("yudpsocket_get_server_ip") func c_yudpsocket_get_server_ip(host:UnsafePointer<Int8>,ip:UnsafePointer<Int8>) -> Int32
+@_silgen_name("yudpsocket_sentto") func c_yudpsocket_sentto(fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:Int32) -> Int32
+@_silgen_name("enable_broadcast") func c_enable_broadcast(fd:Int32)
 
 public class UDPClient: YSocket {
     public override init(addr a:String,port p:Int){
