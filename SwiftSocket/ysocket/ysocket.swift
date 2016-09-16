@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import Foundation
-public class YSocket{
+open class YSocket{
     var addr:String
     var port:Int
     var fd:Int32?
