@@ -41,7 +41,7 @@ func testtcpclient(){
             //读取数据
             let data=client.read(1024*10)
             if let d=data{
-                if let str=String(bytes: d, encoding: NSUTF8StringEncoding){
+                if let str=String(bytes: d, encoding: String.Encoding.utf8){
                     print(str)
                 }
             }
@@ -75,14 +75,14 @@ func testtcpserver(){
 }
 //testclient()
 func testudpserver(){
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+    DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: { () -> Void in
         let server:UDPServer=UDPServer(addr:"127.0.0.1",port:8080)
         let run:Bool=true
         while run{
             var (data,remoteip,remoteport)=server.recv(1024)
             print("recive")
             if let d=data{
-                if let str=String(bytes: d, encoding: NSUTF8StringEncoding){
+                if let str=String(bytes: d, encoding: String.Encoding.utf8){
                     print(str)
                 }
             }
@@ -100,7 +100,7 @@ func testudpclient(){
 }
 //testudpBroadcastclient()
 func testudpBroadcastserver(){
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+    DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: { () -> Void in
         //turn the server to broadcast mode with the address 255.255.255.255 or empty string
         let server:UDPServer=UDPServer(addr:"",port:8080)
         let run:Bool=true
@@ -109,7 +109,7 @@ func testudpBroadcastserver(){
             let (data,remoteip,remoteport)=server.recv(1024)
             print("recive\(remoteip);\(remoteport)")
             if let d=data{
-                if let str=String(bytes: d, encoding: NSUTF8StringEncoding){
+                if let str=String(bytes: d, encoding: String.Encoding.utf8){
                     print(str)
                 }
             }
@@ -134,6 +134,6 @@ func testudpBroadcastclient(){
 testudpBroadcastserver()
 testudpBroadcastclient()
 
-var stdinput=NSFileHandle.fileHandleWithStandardInput()
+var stdinput=FileHandle.standardInput
 stdinput.readDataToEndOfFile()
 
