@@ -124,7 +124,7 @@ int ytcpsocket_send(int socketfd,const char *data,int len){
     return byteswrite;
 }
 //return socket fd
-int ytcpsocket_listen(const char *addr,int port){
+int ytcpsocket_listen(const char *address,int port){
     //create socket
     int socketfd=socket(AF_INET, SOCK_STREAM, 0);
     int reuseon   = 1;
@@ -133,7 +133,7 @@ int ytcpsocket_listen(const char *addr,int port){
     struct sockaddr_in serv_addr;
     memset( &serv_addr, '\0', sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = inet_addr(addr);
+    serv_addr.sin_addr.s_addr = inet_addr(address);
     serv_addr.sin_port = htons(port);
     int r=bind(socketfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
     if(r==0){
