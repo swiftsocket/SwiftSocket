@@ -41,10 +41,10 @@ open class TCPClient: YSocket {
      * connect to server
      * return success or fail with message
      */
-    open func connect(timeout t:Int)->(Bool,String){
-        let rs: Int32 = c_ytcpsocket_connect(self.address, port: Int32(self.port), timeout: Int32(t))
+    open func connect(timeout: Int) -> (Bool, String) {
+        let rs: Int32 = c_ytcpsocket_connect(self.address, port: Int32(self.port), timeout: Int32(timeout))
         if rs > 0 {
-            self.fd=rs
+            self.fd = rs
             return (true,"connect success")
         } else {
             switch rs {
@@ -65,29 +65,25 @@ open class TCPClient: YSocket {
     * return success or fail with message
     */
     open func close() -> (Bool, String) {
-        if let fd = self.fd {
-            c_ytcpsocket_close(fd)
-            self.fd = nil
-            return (true,"close success")
-        } else{
-            return (false,"socket not open")
-        }
+        guard let fd = self.fd else { return (false,"socket not open") }
+        
+        c_ytcpsocket_close(fd)
+        self.fd = nil
+        return (true,"close success")
     }
     
     /*
     * send data
     * return success or fail with message
     */
-    open func send(data d:[UInt8])->(Bool,String){
-        if let fd:Int32=self.fd{
-            let sendsize:Int32=c_ytcpsocket_send(fd, buff: d, len: Int32(d.count))
-            if Int(sendsize)==d.count{
-               return (true,"send success")
-            }else{
-                return (false,"send error")
-            }
-        }else{
-            return (false,"socket not open")
+    open func send(data: [UInt8]) -> (Bool, String) {
+        guard let fd = self.fd else { return (false,"socket not open") }
+        
+        let sendsize: Int32 = c_ytcpsocket_send(fd, buff: data, len: Int32(data.count))
+        if Int(sendsize) == data.count {
+           return (true,"send success")
+        } else {
+            return (false,"send error")
         }
     }
     
@@ -95,16 +91,14 @@ open class TCPClient: YSocket {
     * send string
     * return success or fail with message
     */
-    open func send(str s:String)->(Bool,String){
-        if let fd:Int32=self.fd{
-            let sendsize:Int32=c_ytcpsocket_send(fd, buff: s, len: Int32(strlen(s)))
-            if sendsize==Int32(strlen(s)){
-                return (true,"send success")
-            }else{
-                return (false,"send error")
-            }
-        }else{
-            return (false,"socket not open")
+    open func send(string: String) -> (Bool, String) {
+        guard let fd = self.fd else { return (false,"socket not open") }
+      
+        let sendsize = c_ytcpsocket_send(fd, buff: string, len: Int32(strlen(string)))
+        if sendsize == Int32(strlen(string)) {
+            return (true,"send success")
+        } else {
+            return (false,"send error")
         }
     }
     
@@ -112,18 +106,16 @@ open class TCPClient: YSocket {
     *
     * send nsdata
     */
-    open func send(data d:Data)->(Bool,String){
-        if let fd:Int32=self.fd{
-            var buff:[UInt8] = [UInt8](repeating: 0x0,count: d.count)
-            (d as NSData).getBytes(&buff, length: d.count)
-            let sendsize:Int32=c_ytcpsocket_send(fd, buff: buff, len: Int32(d.count))
-            if sendsize==Int32(d.count){
-                return (true,"send success")
-            }else{
-                return (false,"send error")
-            }
-        }else{
-            return (false,"socket not open")
+    open func send(data: Data) -> (Bool, String) {
+        guard let fd = self.fd else { return (false,"socket not open") }
+      
+        var buff = [UInt8](repeating: 0x0,count: data.count)
+        (data as NSData).getBytes(&buff, length: data.count)
+        let sendsize = c_ytcpsocket_send(fd, buff: buff, len: Int32(data.count))
+        if sendsize == Int32(data.count) {
+            return (true,"send success")
+        } else {
+            return (false,"send error")
         }
     }
     
@@ -132,24 +124,22 @@ open class TCPClient: YSocket {
     * return success or fail with message
     */
     open func read(_ expectlen:Int, timeout:Int = -1)->[UInt8]?{
-        if let fd:Int32 = self.fd{
-            var buff:[UInt8] = [UInt8](repeating: 0x0,count: expectlen)
-            let readLen:Int32=c_ytcpsocket_pull(fd, buff: &buff, len: Int32(expectlen), timeout: Int32(timeout))
-            if readLen<=0{
-                return nil
-            }
-            let rs=buff[0...Int(readLen-1)]
-            let data:[UInt8] = Array(rs)
-            return data
-        }
-       return nil
+        guard let fd:Int32 = self.fd else { return nil }
+      
+        var buff = [UInt8](repeating: 0x0,count: expectlen)
+        let readLen = c_ytcpsocket_pull(fd, buff: &buff, len: Int32(expectlen), timeout: Int32(timeout))
+        if readLen <= 0 { return nil }
+        let rs = buff[0...Int(readLen-1)]
+        let data: [UInt8] = Array(rs)
+      
+        return data
     }
 }
 
-open class TCPServer:YSocket{
+open class TCPServer: YSocket {
 
-    open func listen() -> (Bool,String) {
-        let fd: Int32=c_ytcpsocket_listen(self.address, port: Int32(self.port))
+    open func listen() -> (Bool, String) {
+        let fd = c_ytcpsocket_listen(self.address, port: Int32(self.port))
         if fd > 0 {
             self.fd = fd
             return (true,"listen success")
@@ -174,14 +164,12 @@ open class TCPServer:YSocket{
         return client
     }
     
-    open func close() -> (Bool,String) {
-        if let fd:Int32=self.fd{
-            c_ytcpsocket_close(fd)
-            self.fd=nil
-            return (true,"close success")
-        } else {
-            return (false,"socket not open")
-        }
+    open func close() -> (Bool, String) {
+        guard let fd: Int32=self.fd else { return (false,"socket not open") }
+      
+        c_ytcpsocket_close(fd)
+        self.fd = nil
+        return (true, "close success")
     }
 }
 

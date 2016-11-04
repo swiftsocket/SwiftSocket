@@ -36,7 +36,7 @@ func testtcpclient(){
     var (success,errmsg)=client.connect(timeout: 1)
     if success{
         //发送数据
-        var (success,errmsg)=client.send(str:"GET / HTTP/1.0\n\n" )
+        var (success,errmsg)=client.send(string: "GET / HTTP/1.0\n\n")
         if success{
             //读取数据
             let data=client.read(1024*10)
