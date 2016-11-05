@@ -29,16 +29,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 import Foundation
-open class YSocket{
-    var addr:String
-    var port:Int
-    var fd:Int32?
-    init(){
-        self.addr=""
-        self.port=0
+
+open class YSocket {
+  
+    let address: String
+    let port: Int
+    var fd: Int32?
+  
+    public init(address: String, port: Int) {
+        self.address = address
+        self.port = port
     }
-    public init(addr a:String,port p:Int){
-        self.addr=a
-        self.port=p
-    }
+  
 }
