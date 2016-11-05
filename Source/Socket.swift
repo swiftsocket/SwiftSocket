@@ -32,9 +32,9 @@ import Foundation
 
 open class YSocket {
   
-    let address: String
-    let port: Int
-    var fd: Int32?
+    public let address: String
+    public let port: Int
+    public var fd: Int32?
   
     public init(address: String, port: Int) {
         self.address = address
