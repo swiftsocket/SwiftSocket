@@ -30,6 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
+public typealias Byte = UInt8
+
 open class Socket {
   
     public let address: String
