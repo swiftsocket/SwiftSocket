@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-open class YSocket {
+open class Socket {
   
     public let address: String
     public let port: Int

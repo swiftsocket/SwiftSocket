@@ -38,7 +38,7 @@ import Foundation
 @_silgen_name("yudpsocket_sentto") func c_yudpsocket_sentto(_ fd:Int32,buff:UnsafePointer<UInt8>,len:Int32,ip:UnsafePointer<Int8>,port:Int32) -> Int32
 @_silgen_name("enable_broadcast") func c_enable_broadcast(_ fd:Int32)
 
-open class UDPClient: YSocket {
+open class UDPClient: Socket {
     public override init(address: String, port: Int) {
         let remoteipbuff: [Int8] = [Int8](repeating: 0x0,count: 16)
         let ret = c_yudpsocket_get_server_ip(address, ip: remoteipbuff)
@@ -129,7 +129,7 @@ open class UDPClient: YSocket {
     //TODO add multycast and boardcast
 }
 
-open class UDPServer: YSocket{
+open class UDPServer: Socket{
     public override init(address: String, port: Int) {
         super.init(address: address, port: port)
       

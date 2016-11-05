@@ -36,7 +36,7 @@ import Foundation
 @_silgen_name("ytcpsocket_listen") func c_ytcpsocket_listen(_ address:UnsafePointer<Int8>,port:Int32)->Int32
 @_silgen_name("ytcpsocket_accept") func c_ytcpsocket_accept(_ onsocketfd:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
 
-open class TCPClient: YSocket {
+open class TCPClient: Socket {
     /*
      * connect to server
      * return success or fail with message
@@ -136,7 +136,7 @@ open class TCPClient: YSocket {
     }
 }
 
-open class TCPServer: YSocket {
+open class TCPServer: Socket {
 
     open func listen() -> (Bool, String) {
         let fd = c_ytcpsocket_listen(self.address, port: Int32(self.port))
