@@ -33,12 +33,19 @@ import Foundation
 open class Socket {
   
     public let address: String
-    public let port: Int
+    public let port: Int32
     public var fd: Int32?
   
-    public init(address: String, port: Int) {
+    public init(address: String, port: Int32) {
         self.address = address
         self.port = port
     }
   
+}
+
+public enum SocketError: Error {
+    case queryFailed
+    case connectionClosed
+    case connectionTimeout
+    case unknownError
 }

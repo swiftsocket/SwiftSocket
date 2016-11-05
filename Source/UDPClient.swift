@@ -39,7 +39,7 @@ import Foundation
 @_silgen_name("enable_broadcast") func c_enable_broadcast(_ fd:Int32)
 
 open class UDPClient: Socket {
-    public override init(address: String, port: Int) {
+    public override init(address: String, port: Int32) {
         let remoteipbuff: [Int8] = [Int8](repeating: 0x0,count: 16)
         let ret = c_yudpsocket_get_server_ip(address, ip: remoteipbuff)
         guard let ip = String(cString: remoteipbuff, encoding: String.Encoding.utf8), ret == 0 else {
@@ -59,16 +59,14 @@ open class UDPClient: Socket {
     * send data
     * return success or fail with message
     */
-    open func send(data d: [UInt8]) -> (Bool,String) {
-        if let fd: Int32 = self.fd {
-            let sendsize: Int32 = c_yudpsocket_sentto(fd, buff: d, len: Int32(d.count), ip: self.address, port: Int32(self.port))
-            if Int(sendsize) == d.count {
-                return (true, "send success")
-            } else {
-                return (false, "send error")
-            }
+    open func send(data: [UInt8]) -> Result {
+        guard let fd = self.fd else { return .failure(SocketError.connectionClosed) }
+        
+        let sendsize: Int32 = c_yudpsocket_sentto(fd, buff: data, len: Int32(data.count), ip: self.address, port: Int32(self.port))
+        if Int(sendsize) == data.count {
+            return .success
         } else {
-            return (false, "socket not open")
+            return .failure(SocketError.unknownError)
         }
     }
     
@@ -76,16 +74,14 @@ open class UDPClient: Socket {
     * send string
     * return success or fail with message
     */
-    open func send(str s:String) -> (Bool,String) {
-        if let fd: Int32 = self.fd {
-            let sendsize: Int32 = c_yudpsocket_sentto(fd, buff: s, len: Int32(strlen(s)), ip: self.address,port: Int32(self.port))
-            if sendsize == Int32(strlen(s)) {
-                return (true,"send success")
-            } else {
-                return (false,"send error")
-            }
+    open func send(string: String) -> Result {
+        guard let fd = self.fd else { return .failure(SocketError.connectionClosed) }
+        
+        let sendsize = c_yudpsocket_sentto(fd, buff: string, len: Int32(strlen(string)), ip: address, port: port)
+        if sendsize == Int32(strlen(string)) {
+            return .success
         } else {
-            return (false,"socket not open")
+            return .failure(SocketError.unknownError)
         }
     }
     
@@ -93,47 +89,43 @@ open class UDPClient: Socket {
     * enableBroadcast
     */
     open func enableBroadcast() {
-        if let fd: Int32 = self.fd {
-            c_enable_broadcast(fd)
-        }
+        guard let fd: Int32 = self.fd else { return }
+        
+        c_enable_broadcast(fd)
     }
     
     /*
     *
     * send nsdata
     */
-    open func send(data d:Data) -> (Bool,String) {
-        if let fd: Int32 = self.fd {
-            var buff:[UInt8] = [UInt8](repeating: 0x0,count: d.count)
-            (d as NSData).getBytes(&buff, length: d.count)
-            let sendsize:Int32=c_yudpsocket_sentto(fd, buff: buff, len: Int32(d.count), ip: self.address,port: Int32(self.port))
-            if sendsize==Int32(d.count){
-                return (true,"send success")
-            } else {
-                return (false,"send error")
-            }
+    open func send(data: Data) -> Result {
+        guard let fd = self.fd else { return .failure(SocketError.connectionClosed) }
+        
+        var buff = [UInt8](repeating: 0x0,count: data.count)
+        (data as NSData).getBytes(&buff, length: data.count)
+        let sendsize = c_yudpsocket_sentto(fd, buff: buff, len: Int32(data.count), ip: address, port: port)
+        if sendsize == Int32(data.count) {
+            return .success
         } else {
-            return (false,"socket not open")
+            return .failure(SocketError.unknownError)
         }
     }
     
-    open func close() -> (Bool,String) {
-        if let fd = self.fd{
-            c_yudpsocket_close(fd)
-            self.fd=nil
-            return (true,"close success")
-        } else {
-            return (false,"socket not open")
-        }
+    open func close() {
+        guard let fd = self.fd else { return }
+        
+        _ = c_yudpsocket_close(fd)
+        self.fd = nil
     }
     //TODO add multycast and boardcast
 }
 
-open class UDPServer: Socket{
-    public override init(address: String, port: Int) {
+open class UDPServer: Socket {
+    
+    public override init(address: String, port: Int32) {
         super.init(address: address, port: port)
       
-        let fd: Int32 = c_yudpsocket_server(self.address, port: Int32(self.port))
+        let fd = c_yudpsocket_server(address, port: port)
         if fd > 0 { 
             self.fd = fd
         }
@@ -161,17 +153,13 @@ open class UDPServer: Socket{
             return (data, address, port)
         }
       
-        return (nil,"no ip",0)
+        return (nil, "no ip", 0)
     }
   
-    open func close() -> (Bool, String) {
-        if let fd = self.fd {
-            c_yudpsocket_close(fd)
-            self.fd = nil
-          
-            return (true, "close success")
-        } else {
-            return (false, "socket not open")
-        }
+    open func close() {
+        guard let fd = self.fd else { return }
+        
+        _ = c_yudpsocket_close(fd)
+        self.fd = nil
     }
 }
