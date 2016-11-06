@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
     :git => 'https://github.com/danshevluk/SwiftSocket.git',
     :tag => s.version
   }
-  s.source_files  = 'SwiftSocket/**/*'
+  s.source_files  = 'Sources/**/*'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3' }
 
 end
