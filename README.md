@@ -1,11 +1,7 @@
 # SwiftSocket
-
------
 SwiftSocket library provides as easy to use interface for socket based connections on server or client side. Supports both TCP and UDP sockets.
 
 # Installation
------
-
 ## Cocoapods
 Add this to your `Podfile`:
 ```ruby
@@ -14,7 +10,6 @@ pod 'SwiftSocket'
 And run then `pod install`
 
 # Code examples
------
 
 ## Create client socket
 ``` swift
