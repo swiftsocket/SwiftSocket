@@ -1,7 +1,6 @@
 # SwiftSocket
 
 -----
-
 SwiftSocket library provides as easy to use interface for socket based connections on server or client side. Supports both TCP and UDP sockets.
 
 # Installation
@@ -44,28 +43,12 @@ let result = client.send(data: data)
 var data = client.read(1024*10) //return optional [Int8]
 ```
 
-## close socket
+## Close socket
 ``` swift
-var (success, errormsg) = client.close()
+client.close()
 ```
 
-## create servert socket
-
-``` swift
-var server:TCPServer = TCPServer(addr: "127.0.0.1", port: 8080)
-```
-
-## listen
-
-``` swift
-var (success, msg) = server.listen()
-```
-### accept
-``` swift
-var client = server.accept() //now you can use client socket api to read and write
-```
-
-# Client socket example
+## Client socket example
 ``` swift
 let client = TCPClient(address: "www.apple.com", port: 80)
 switch client.connect(timeout: 1) {
@@ -86,7 +69,7 @@ switch client.connect(timeout: 1) {
 
 ```
 
-# Server socket example (echo server)
+## Server socket example (echo server)
 ``` swift
 func echoService(client: TCPClient) {
     print("Newclient from:\(c.address)[\(c.port)]")
