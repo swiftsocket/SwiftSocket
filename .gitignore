@@ -1,10 +1,4 @@
-*.xcuserdatad
-*.DS_Store
-*.pbxproj
-*.xcuserstate
-*.xccheckout
 # Xcode
-.DS_Store
 build/
 *.pbxuser
 !default.pbxuser
@@ -14,12 +8,36 @@ build/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-*.xcworkspace
-!default.xcworkspace
 xcuserdata
-profile
+*.xccheckout
 *.moved-aside
 DerivedData
-.idea/
-# Pods - for those of you who use CocoaPods
-Pods
+*.hmap
+*.ipa
+*.xcuserstate
+
+#OS X Stuff
+.localized
+.DS_Store
+*.zip
+
+# Pods
+Pods/
+
+# Editors
+.idea
+*.swp
+
+# Fastlane
+fastlane/report.xml
+*.mobileprovision
+*.certSigningRequest
+*.cer
+
+# Keys
+*.pem
+*.pkey
+*.p12
+
+# Rbenv
+.ruby-version

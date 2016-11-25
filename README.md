@@ -1,104 +1,91 @@
-# a simple socket library for apple swift lang
-# usage
-> drag ysocket.c and ysocket.swift to your project
-> just use apis in YSocket class
+# SwiftSocket
+SwiftSocket library provides as easy to use interface for socket based connections on server or client side. Supports both TCP and UDP sockets.
 
-# api usage
-## create client socket
-``` swift
-//create a socket connect to www.apple.com and port at 80
-var client:TCPClient = TCPClient(addr: "www.apple.com", port: 80)
+# Installation
+## Cocoapods
+Add this to your `Podfile`:
+```ruby
+pod 'SwiftSocket'
 ```
-## connect with timeout
+And run then `pod install`
+
+# Code examples
+
+## Create client socket
 ``` swift
-var (success, errmsg) = client.connect(timeout: 10)
+// Create a socket connect to www.apple.com and port at 80
+let client = TCPClient(address: "www.apple.com", port: 80)
+```
+## Connect with timeout
+You can also set timeout to `-1` or leave parameters empty (`client.connect()`) to turn off connection timeout.
+``` swift
+ switch client.connect(timeout: 10) {
+   case .success:
+     // Connection successful 🎉
+   case .failure(let error):
+     // 💩
+ }
 ```
 
-## send data
+## Send data
 ``` swift
-var (success, errmsg) = client.send(str:"GET / HTTP/1.0\n\n")
-//or you can send binnary data
-//socket.send(data:[Int8])
+let data: Data = // ... Bytes you want to send
+let result = client.send(data: data)
 ```
 
-## read data
+## Read data
 ``` swift
 var data = client.read(1024*10) //return optional [Int8]
 ```
 
-## close socket
+## Close socket
 ``` swift
-var (success, errormsg) = client.close()
+client.close()
 ```
 
-## create servert socket
-
+## Client socket example
 ``` swift
-var server:TCPServer = TCPServer(addr: "127.0.0.1", port: 8080)
-```
+let client = TCPClient(address: "www.apple.com", port: 80)
+switch client.connect(timeout: 1) {
+  case .success:
+    switch client.send(string: "GET / HTTP/1.0\n\n" ) {
+      case .success:
+        guard let data = client.read(1024*10) else { return }
 
-## listen
-
-``` swift
-var (success, msg) = server.listen()
-```
-### accept
-``` swift
-var client = server.accept() //now you can use client socket api to read and write
-```
-
-# client socket example
-``` swift
-//创建socket
-var client:TCPClient = TCPClient(addr: "www.apple.com", port: 80)
-//连接
-var (success, errmsg) = client.connect(timeout: 1)
-if success {
-    //发送数据
-    var (success, errmsg) = client.send(str:"GET / HTTP/1.0\n\n" )
-    if success {
-        //读取数据
-        var data = client.read(1024*10)
-        if let d = data {
-            if let str = String.stringWithBytes(d, length: d.count, encoding: NSUTF8StringEncoding){
-                println(str)
-            }
+        if let response = String(bytes: data, encoding: .utf8) {
+          print(response)
         }
-    }else {
-        println(errmsg)
+      case .failure(let error):
+        print(error)
     }
-} else {
-    println(errmsg)
+  case .failure(let error):
+    print(error)
 }
+
 ```
 
-# server socket example (echo server)
+## Server socket example (echo server)
 ``` swift
-func echoService(client c:TCPClient) {
-    println("newclient from:\(c.addr)[\(c.port)]")
+func echoService(client: TCPClient) {
+    print("Newclient from:\(c.address)[\(c.port)]")
     var d = c.read(1024*10)
     c.send(data: d!)
     c.close()
 }
-func testserver(){
-    var server:TCPServer = TCPServer(addr: "127.0.0.1", port: 8080)
-    var (success, msg) = server.listen()
-    if success {
+
+func testServer() {
+    let server = TCPServer(address: "127.0.0.1", port: 8080)
+    switch server.listen() {
+      case .success:
         while true {
             if var client = server.accept() {
                 echoService(client: client)
             } else {
-                println("accept error")
+                print("accept error")
             }
         }
-    } else {
-        println(msg)
+      case .failure(let error):
+        print(error)
     }
 }
 ```
-
-# Copyright and License
-Code released under the BSD license.
-
-# QQ group
-275935304
