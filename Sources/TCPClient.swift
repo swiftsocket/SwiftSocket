@@ -36,6 +36,7 @@ import Foundation
 @_silgen_name("ytcpsocket_pull") private func c_ytcpsocket_pull(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32,timeout:Int32) -> Int32
 @_silgen_name("ytcpsocket_listen") private func c_ytcpsocket_listen(_ address:UnsafePointer<Int8>,port:Int32)->Int32
 @_silgen_name("ytcpsocket_accept") private func c_ytcpsocket_accept(_ onsocketfd:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
+@_silgen_name("ytcpsocket_port") private func c_ytcpsocket_port(_ fd:Int32) -> Int32
 
 open class TCPClient: Socket {
   
@@ -143,6 +144,17 @@ open class TCPServer: Socket {
         let fd = c_ytcpsocket_listen(self.address, port: Int32(self.port))
         if fd > 0 {
             self.fd = fd
+            
+            // If port 0 is used, get the actual port number which the server is listening to
+            if (self.port == 0) {
+                let p = c_ytcpsocket_port(fd)
+                if (p == -1) {
+                    return .failure(SocketError.unknownError)
+                } else {
+                    self.port = p
+                }
+            }
+            
             return .success
         } else {
             return .failure(SocketError.unknownError)

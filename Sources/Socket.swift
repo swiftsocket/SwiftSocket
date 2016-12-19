@@ -35,7 +35,7 @@ public typealias Byte = UInt8
 open class Socket {
   
     public let address: String
-    public let port: Int32
+    public var port: Int32
     public var fd: Int32?
   
     public init(address: String, port: Int32) {
