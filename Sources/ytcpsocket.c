@@ -43,6 +43,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <sys/select.h>
+#include <sys/ioctl.h>
 
 void ytcpsocket_set_block(int socket, int on) {
     int flags;
@@ -119,6 +120,17 @@ int ytcpsocket_pull(int socketfd, char *data, int len, int timeout_sec) {
     }
     int readlen = (int)read(socketfd, data, len);
     return readlen;
+}
+
+int ytcpsocket_bytes_available(int socketfd) {
+    int count;
+    int callResult = ioctl(socketfd, FIONREAD, &count);
+
+    if (callResult < 0) {
+        return callResult;
+    }
+
+    return count;
 }
 
 int ytcpsocket_send(int socketfd, const char *data, int len){
