@@ -173,3 +173,14 @@ int ytcpsocket_accept(int onsocketfd, char *remoteip, int *remoteport) {
         return -1;
     }
 }
+
+//return socket port
+int ytcpsocket_port(int socketfd) {
+    struct sockaddr_in sin;
+    socklen_t len = sizeof(sin);
+    if (getsockname(socketfd, (struct sockaddr *)&sin, &len) == -1) {
+        return -1;
+    } else {
+        return ntohs(sin.sin_port);
+    }
+}
