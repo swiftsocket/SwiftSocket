@@ -17,7 +17,7 @@ And run then `pod install`
 
 ## Carthage
 ```ruby
-github 'swiftsocket/SwiftSocket
+github "swiftsocket/SwiftSocket"
 ```
 
 # Code examples
