@@ -78,10 +78,10 @@ switch client.connect(timeout: 1) {
 ## Server socket example (echo server)
 ``` swift
 func echoService(client: TCPClient) {
-    print("Newclient from:\(c.address)[\(c.port)]")
-    var d = c.read(1024*10)
-    c.send(data: d!)
-    c.close()
+    print("Newclient from:\(client.address)[\(client.port)]")
+    var d = client.read(1024*10)
+    client.send(data: d!)
+    client.close()
 }
 
 func testServer() {
