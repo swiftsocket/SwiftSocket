@@ -111,6 +111,26 @@ open class UDPClient: Socket {
         }
     }
     
+    //TODO add multycast and boardcast
+    open func recv(_ expectlen: Int) -> ([Byte]?, String, Int) {
+        guard let fd = self.fd else {
+            return (nil, "no ip", 0)
+        }
+        var buff: [Byte] = [Byte](repeating: 0x0, count: expectlen)
+        var remoteipbuff: [Int8] = [Int8](repeating: 0x0, count: 16)
+        var remoteport: Int32 = 0
+        let readLen: Int32 = c_yudpsocket_recive(fd, buff: buff, len: Int32(expectlen), ip: &remoteipbuff, port: &remoteport)
+        let port: Int = Int(remoteport)
+        let address = String(cString: remoteipbuff, encoding: String.Encoding.utf8) ?? ""
+        
+        if readLen <= 0 {
+            return (nil, address, port)
+        }
+
+        let data: [Byte] = Array(buff[0..<Int(readLen)])
+        return (data, address, port)
+    }
+    
     open func close() {
         guard let fd = self.fd else { return }
         
