@@ -159,15 +159,31 @@ int ytcpsocket_listen(const char *address, int port) {
 }
 
 //return client socket fd
-int ytcpsocket_accept(int onsocketfd, char *remoteip, int *remoteport) {
+int ytcpsocket_accept(int onsocketfd, char *remoteip, int *remoteport, int timeouts) {
     socklen_t clilen;
     struct sockaddr_in  cli_addr;
     clilen = sizeof(cli_addr);
+    fd_set fdset;
+    FD_ZERO(&fdset);
+    FD_SET(onsocketfd, &fdset);
+    struct timeval *timeptr = NULL;
+    struct timeval timeout;
+    if (timeouts > 0) {
+      timeout.tv_sec = timeouts;
+      timeout.tv_usec = 0;
+      timeptr = &timeout;
+    }
+    int status = select(FD_SETSIZE, &fdset, NULL, NULL, timeptr);
+    if (status != 1) {
+      return -1;
+    }
     int newsockfd = accept(onsocketfd, (struct sockaddr *) &cli_addr, &clilen);
     char *clientip=inet_ntoa(cli_addr.sin_addr);
     memcpy(remoteip, clientip, strlen(clientip));
     *remoteport = cli_addr.sin_port;
     if (newsockfd > 0) {
+        int set = 1;
+        setsockopt(newsockfd, SOL_SOCKET, SO_NOSIGPIPE, (void*) &set, sizeof(int));
         return newsockfd;
     } else {
         return -1;
