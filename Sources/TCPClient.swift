@@ -35,7 +35,7 @@ import Foundation
 @_silgen_name("ytcpsocket_send") private func c_ytcpsocket_send(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32) -> Int32
 @_silgen_name("ytcpsocket_pull") private func c_ytcpsocket_pull(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32,timeout:Int32) -> Int32
 @_silgen_name("ytcpsocket_listen") private func c_ytcpsocket_listen(_ address:UnsafePointer<Int8>,port:Int32)->Int32
-@_silgen_name("ytcpsocket_accept") private func c_ytcpsocket_accept(_ onsocketfd:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
+@_silgen_name("ytcpsocket_accept") private func c_ytcpsocket_accept(_ onsocketfd:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>,timeout:Int32) -> Int32
 @_silgen_name("ytcpsocket_port") private func c_ytcpsocket_port(_ fd:Int32) -> Int32
 
 open class TCPClient: Socket {
@@ -161,12 +161,12 @@ open class TCPServer: Socket {
         }
     }
     
-    open func accept() -> TCPClient? {
+    open func accept(timeout :Int32 = 0) -> TCPClient? {
         guard let serferfd = self.fd else { return nil }
         
         var buff: [Int8] = [Int8](repeating: 0x0,count: 16)
         var port: Int32 = 0
-        let clientfd: Int32 = c_ytcpsocket_accept(serferfd, ip: &buff, port: &port)
+        let clientfd: Int32 = c_ytcpsocket_accept(serferfd, ip: &buff, port: &port, timeout: timeout)
         
         guard clientfd >= 0 else { return nil }
         guard let address = String(cString: buff, encoding: String.Encoding.utf8) else { return nil }
