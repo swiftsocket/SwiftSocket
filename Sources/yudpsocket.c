@@ -48,6 +48,7 @@ int yudpsocket_server(const char *address, int port) {
   
     //bind
     struct sockaddr_in serv_addr;
+    memset( &serv_addr, '\0', sizeof(serv_addr));
     serv_addr.sin_len = sizeof(struct sockaddr_in);
     serv_addr.sin_family = AF_INET;
     if (address == NULL || strlen(address) == 0 || strcmp(address, "255.255.255.255") == 0) {
@@ -58,7 +59,6 @@ int yudpsocket_server(const char *address, int port) {
         r = setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &reuseon, sizeof(reuseon));
         serv_addr.sin_addr.s_addr = inet_addr(address);
         serv_addr.sin_port = htons(port);
-        memset( &serv_addr, '\0', sizeof(serv_addr));
     }
   
     if (r == -1) {
