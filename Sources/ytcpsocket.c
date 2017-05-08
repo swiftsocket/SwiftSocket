@@ -105,6 +105,8 @@ int ytcpsocket_close(int socketfd){
 }
 
 int ytcpsocket_pull(int socketfd, char *data, int len, int timeout_sec) {
+    int readlen = 0;
+    int datalen = 0;
     if (timeout_sec > 0) {
         fd_set fdset;
         struct timeval timeout;
@@ -117,9 +119,15 @@ int ytcpsocket_pull(int socketfd, char *data, int len, int timeout_sec) {
             return ret; // select-call failed or timeout occurred (before anything was sent)
         }
     }
-    // use recv() to receive all data which was already in data buffer
-    // if use read() can't receive all data in data buffer
-    int readlen = (int)recv(socketfd, data, len, 0);
+    // use loop to make sure receive all data
+    do {
+        readlen = (int)read(socketfd, data + datalen, len - datalen);
+        printf("%d\n",readlen);
+        if (readlen > 0) {
+            datalen += readlen;
+        }
+    } while (readlen > 0);
+    
     return readlen;
 }
 
