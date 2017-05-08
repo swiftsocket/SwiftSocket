@@ -117,7 +117,9 @@ int ytcpsocket_pull(int socketfd, char *data, int len, int timeout_sec) {
             return ret; // select-call failed or timeout occurred (before anything was sent)
         }
     }
-    int readlen = (int)read(socketfd, data, len);
+    // use recv() to receive all data which was already in data buffer
+    // if use read() can't receive all data in data buffer
+    int readlen = (int)recv(socketfd, data, len, 0);
     return readlen;
 }
 
