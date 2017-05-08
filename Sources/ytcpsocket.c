@@ -93,7 +93,6 @@ int ytcpsocket_connect(const char *host, int port, int timeout) {
             return -4;//connect fail
         }
       
-        ytcpsocket_set_block(sockfd, 1);
         int set = 1;
         setsockopt(sockfd, SOL_SOCKET, SO_NOSIGPIPE, (void *)&set, sizeof(int));
         return sockfd;
