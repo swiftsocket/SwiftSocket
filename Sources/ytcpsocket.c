@@ -93,7 +93,6 @@ int ytcpsocket_connect(const char *host, int port, int timeout) {
             return -4;//connect fail
         }
       
-        ytcpsocket_set_block(sockfd, 1);
         int set = 1;
         setsockopt(sockfd, SOL_SOCKET, SO_NOSIGPIPE, (void *)&set, sizeof(int));
         return sockfd;
@@ -105,6 +104,8 @@ int ytcpsocket_close(int socketfd){
 }
 
 int ytcpsocket_pull(int socketfd, char *data, int len, int timeout_sec) {
+    int readlen = 0;
+    int datalen = 0;
     if (timeout_sec > 0) {
         fd_set fdset;
         struct timeval timeout;
@@ -117,7 +118,15 @@ int ytcpsocket_pull(int socketfd, char *data, int len, int timeout_sec) {
             return ret; // select-call failed or timeout occurred (before anything was sent)
         }
     }
-    int readlen = (int)read(socketfd, data, len);
+    // use loop to make sure receive all data
+    do {
+        readlen = (int)read(socketfd, data + datalen, len - datalen);
+        printf("%d\n",readlen);
+        if (readlen > 0) {
+            datalen += readlen;
+        }
+    } while (readlen > 0);
+    
     return readlen;
 }
 
