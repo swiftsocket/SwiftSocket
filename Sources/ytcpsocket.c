@@ -122,7 +122,6 @@ int ytcpsocket_pull(int socketfd, char *data, int len, int timeout_sec) {
     // use loop to make sure receive all data
     do {
         readlen = (int)read(socketfd, data + datalen, len - datalen);
-        printf("%d\n",readlen);
         if (readlen > 0) {
             datalen += readlen;
         }
