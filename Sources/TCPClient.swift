@@ -30,7 +30,7 @@
 
 import Foundation
 
-@_silgen_name("ytcpsocket_connect") private func c_ytcpsocket_connect(_ host:UnsafePointer<Byte>,port:Int32,timeout:Int32) -> Int32
+@_silgen_name("ytcpsocket_connect") private func c_ytcpsocket_connect(_ host:UnsafePointer<Byte>,port:Int32,timeout:Int32,isBlocking:Int32) -> Int32
 @_silgen_name("ytcpsocket_close") private func c_ytcpsocket_close(_ fd:Int32) -> Int32
 @_silgen_name("ytcpsocket_send") private func c_ytcpsocket_send(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32) -> Int32
 @_silgen_name("ytcpsocket_pull") private func c_ytcpsocket_pull(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32,timeout:Int32) -> Int32
@@ -44,8 +44,8 @@ open class TCPClient: Socket {
      * connect to server
      * return success or fail with message
      */
-    open func connect(timeout: Int) -> Result {
-        let rs: Int32 = c_ytcpsocket_connect(self.address, port: Int32(self.port), timeout: Int32(timeout))
+    open func connect(timeout: Int, isBlocking: Bool = false) -> Result {
+        let rs: Int32 = c_ytcpsocket_connect(self.address, port: Int32(self.port), timeout: Int32(timeout), isBlocking: Int32(isBlocking ? 1 : 0))
         if rs > 0 {
             self.fd = rs
             return .success

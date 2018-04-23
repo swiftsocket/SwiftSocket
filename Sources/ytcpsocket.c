@@ -56,7 +56,7 @@ void ytcpsocket_set_block(int socket, int on) {
     }
 }
 
-int ytcpsocket_connect(const char *host, int port, int timeout) {
+int ytcpsocket_connect(const char *host, int port, int timeout, int isBlocking) {
     struct sockaddr_in sa;
     struct hostent *hp;
     int sockfd = -1;
@@ -69,7 +69,7 @@ int ytcpsocket_connect(const char *host, int port, int timeout) {
     sa.sin_family = hp->h_addrtype;
     sa.sin_port = htons(port);
     sockfd = socket(hp->h_addrtype, SOCK_STREAM, 0);
-    ytcpsocket_set_block(sockfd,0);
+    ytcpsocket_set_block(sockfd, isBlocking);
     connect(sockfd, (struct sockaddr *)&sa, sizeof(sa));
     fd_set fdwrite;
     struct timeval  tvSelect;
