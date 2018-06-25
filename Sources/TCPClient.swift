@@ -32,6 +32,7 @@ import Foundation
 
 @_silgen_name("ytcpsocket_connect") private func c_ytcpsocket_connect(_ host:UnsafePointer<Byte>,port:Int32,timeout:Int32) -> Int32
 @_silgen_name("ytcpsocket_close") private func c_ytcpsocket_close(_ fd:Int32) -> Int32
+@_silgen_name("ytcpsocket_bytes_available") private func c_ytcpsocket_bytes_available(_ fd:Int32) -> Int32
 @_silgen_name("ytcpsocket_send") private func c_ytcpsocket_send(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32) -> Int32
 @_silgen_name("ytcpsocket_pull") private func c_ytcpsocket_pull(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32,timeout:Int32) -> Int32
 @_silgen_name("ytcpsocket_listen") private func c_ytcpsocket_listen(_ address:UnsafePointer<Int8>,port:Int32)->Int32
@@ -39,7 +40,6 @@ import Foundation
 @_silgen_name("ytcpsocket_port") private func c_ytcpsocket_port(_ fd:Int32) -> Int32
 
 open class TCPClient: Socket {
-  
     /*
      * connect to server
      * return success or fail with message
@@ -62,7 +62,7 @@ open class TCPClient: Socket {
             }
         }
     }
-  
+
     /*
     * close socket
     * return success or fail with message
@@ -135,6 +135,21 @@ open class TCPClient: Socket {
         let data: [Byte] = Array(rs)
       
         return data
+    }
+
+    /*
+    * gets byte available for reading
+    */
+    open func bytesAvailable() -> Int32? {
+        guard let fd:Int32 = self.fd else { return nil }
+
+        let bytesAvailable = c_ytcpsocket_bytes_available(fd);
+
+        if (bytesAvailable < 0) {
+            return nil
+        }
+
+        return bytesAvailable
     }
 }
 
