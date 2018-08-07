@@ -95,6 +95,10 @@ int yudpsocket_client() {
     int socketfd = socket(AF_INET, SOCK_DGRAM, 0);
     int reuseon = 1;
     setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &reuseon, sizeof(reuseon));
+
+    //disable SIGPIPE as we'll handle send errors ourselves
+    int noSigPipe = 1;
+    setsockopt(socketfd, SOL_SOCKET, SO_NOSIGPIPE, &noSigPipe, sizeof(noSigPipe));
   
     return socketfd;
 }
