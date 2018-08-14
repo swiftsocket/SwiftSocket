@@ -128,6 +128,9 @@ int ytcpsocket_pull(int socketfd, char *data, int len, int timeout_sec) {
         }
     } while (readlen > 0);
     
+    // check disconnection from server
+    if(datalen == 0) { return -99; }
+    
     return datalen;
 }
 
