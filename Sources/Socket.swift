@@ -34,11 +34,11 @@ public typealias Byte = UInt8
 
 open class Socket {
   
-    public let address: String
-    internal(set) public var port: Int32
+    @objc public let address: String
+    @objc internal(set) public var port: Int32
     internal(set) public var fd: Int32?
   
-    public init(address: String, port: Int32) {
+    @objc public init(address: String, port: Int32) {
         self.address = address
         self.port = port
     }
