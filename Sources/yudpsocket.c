@@ -96,7 +96,42 @@ int yudpsocket_client() {
     int reuseon = 1;
     setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &reuseon, sizeof(reuseon));
   
-    return socketfd;
+    //bind
+    struct sockaddr_in serv_addr;
+    memset( &serv_addr, '\0', sizeof(serv_addr));
+    serv_addr.sin_len = sizeof(struct sockaddr_in);
+    serv_addr.sin_family = AF_INET;
+    
+    int r = setsockopt(socketfd, SOL_SOCKET, SO_BROADCAST, &reuseon, sizeof(reuseon));
+    serv_addr.sin_port = htons(0); // bind random port
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    
+    if (r == -1) {
+        return -1;
+    }
+    
+    r = bind(socketfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
+    if (r == 0) {
+        return socketfd;
+    }
+    
+    return -1;
+}
+
+int yudpsocket_get_local_port(int socket_fd) {
+    int localPort = 0;
+    struct sockaddr_in sin;
+    socklen_t addrlen = sizeof(sin);
+    if(getsockname(socket_fd, (struct sockaddr *)&sin, &addrlen) == 0 &&
+       sin.sin_family == AF_INET &&
+       addrlen == sizeof(sin))
+    {
+        localPort = ntohs(sin.sin_port);
+    }
+    else
+        printf("localPort: Error get local port\n"); // handle error
+    
+    return localPort;
 }
 
 //enable broadcast

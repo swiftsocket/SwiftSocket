@@ -43,6 +43,10 @@ open class Socket {
         self.port = port
     }
   
+    public init() {
+        self.address = ""
+        self.port = 0
+    }
 }
 
 public enum SocketError: Error {

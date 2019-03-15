@@ -34,6 +34,7 @@ import Foundation
 @_silgen_name("yudpsocket_recive") func c_yudpsocket_recive(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
 @_silgen_name("yudpsocket_close") func c_yudpsocket_close(_ fd:Int32) -> Int32
 @_silgen_name("yudpsocket_client") func c_yudpsocket_client() -> Int32
+@_silgen_name("yudpsocket_get_local_port") func c_yudpsocket_get_local_port(_ fd:Int32) -> Int32
 @_silgen_name("yudpsocket_get_server_ip") func c_yudpsocket_get_server_ip(_ host:UnsafePointer<Int8>,ip:UnsafePointer<Int8>) -> Int32
 @_silgen_name("yudpsocket_sentto") func c_yudpsocket_sentto(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32,ip:UnsafePointer<Int8>,port:Int32) -> Int32
 @_silgen_name("enable_broadcast") func c_enable_broadcast(_ fd:Int32)
@@ -55,6 +56,22 @@ open class UDPClient: Socket {
         }
     }
     
+    public override init() {
+        super.init()
+        
+        let fd: Int32 = c_yudpsocket_client()
+        if fd > 0 {
+            self.fd = fd
+        }
+    }
+    
+    public func getLocalPort() -> Int32 {
+        guard let fd = self.fd else {
+            return -1;
+        }
+        return c_yudpsocket_get_local_port(fd)
+    }
+    
     /*
     * send data
     * return success or fail with message
@@ -63,6 +80,17 @@ open class UDPClient: Socket {
         guard let fd = self.fd else { return .failure(SocketError.connectionClosed) }
         
         let sendsize: Int32 = c_yudpsocket_sentto(fd, buff: data, len: Int32(data.count), ip: self.address, port: Int32(self.port))
+        if Int(sendsize) == data.count {
+            return .success
+        } else {
+            return .failure(SocketError.unknownError)
+        }
+    }
+    
+    open func send(ip: String, port: Int, data: [Byte]) -> Result {
+        guard let fd = self.fd else { return .failure(SocketError.connectionClosed) }
+        
+        let sendsize: Int32 = c_yudpsocket_sentto(fd, buff: data, len: Int32(data.count), ip: ip, port: Int32(port))
         if Int(sendsize) == data.count {
             return .success
         } else {
