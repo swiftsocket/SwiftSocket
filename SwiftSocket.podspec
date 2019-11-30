@@ -23,6 +23,6 @@ Pod::Spec.new do |s|
     :tag => s.version
   }
   s.source_files  = 'Sources/**/*.{swift,c}'
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3' }
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5' }
 
 end
