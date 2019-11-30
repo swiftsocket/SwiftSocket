@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.summary      = 'A cool framework to work with TCP and UDP sockets'
 
   s.description  = <<-DESC
-                    SwiftSocket profieds an easy way to create TCP or UDP clients and servers 💁
+                    SwiftSocket provides an easy way to create TCP or UDP clients and servers 💁
                    DESC
 
   s.homepage     = 'https://github.com/swiftsocket/SwiftSocket'
