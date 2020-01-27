@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.summary      = 'A cool framework to work with TCP and UDP sockets'
 
   s.description  = <<-DESC
-                    SwiftSocket profieds an easy way to create TCP or UDP clients and servers 💁
+                    SwiftSocket provides an easy way to create TCP or UDP clients and servers 💁
                    DESC
 
   s.homepage     = 'https://github.com/swiftsocket/SwiftSocket'
@@ -23,6 +23,6 @@ Pod::Spec.new do |s|
     :tag => s.version
   }
   s.source_files  = 'Sources/**/*.{swift,c}'
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5' }
 
 end
