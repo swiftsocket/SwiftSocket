@@ -29,6 +29,9 @@
 //
 
 import Foundation
+#if canImport(SwiftSocketC)
+import SwiftSocketC
+#endif
 
 @_silgen_name("yudpsocket_server") func c_yudpsocket_server(_ host:UnsafePointer<Int8>,port:Int32) -> Int32
 @_silgen_name("yudpsocket_recive") func c_yudpsocket_recive(_ fd:Int32,buff:UnsafePointer<Byte>,len:Int32,ip:UnsafePointer<Int8>,port:UnsafePointer<Int32>) -> Int32
@@ -59,12 +62,12 @@ open class UDPClient: Socket {
     * send data
     * return success or fail with message
     */
-    open func send(data: [Byte]) -> Result {
+    open func send(data: [Byte]) -> Result<Void, Error> {
         guard let fd = self.fd else { return .failure(SocketError.connectionClosed) }
         
         let sendsize: Int32 = c_yudpsocket_sentto(fd, buff: data, len: Int32(data.count), ip: self.address, port: Int32(self.port))
         if Int(sendsize) == data.count {
-            return .success
+            return .success(())
         } else {
             return .failure(SocketError.unknownError)
         }
@@ -74,12 +77,12 @@ open class UDPClient: Socket {
     * send string
     * return success or fail with message
     */
-    open func send(string: String) -> Result {
+    open func send(string: String) -> Result<Void, Error> {
         guard let fd = self.fd else { return .failure(SocketError.connectionClosed) }
         
         let sendsize = c_yudpsocket_sentto(fd, buff: string, len: Int32(strlen(string)), ip: address, port: port)
         if sendsize == Int32(strlen(string)) {
-            return .success
+            return .success(())
         } else {
             return .failure(SocketError.unknownError)
         }
@@ -98,14 +101,14 @@ open class UDPClient: Socket {
     *
     * send nsdata
     */
-    open func send(data: Data) -> Result {
+    open func send(data: Data) -> Result<Void, Error> {
         guard let fd = self.fd else { return .failure(SocketError.connectionClosed) }
         
         var buff = [Byte](repeating: 0x0,count: data.count)
         (data as NSData).getBytes(&buff, length: data.count)
         let sendsize = c_yudpsocket_sentto(fd, buff: buff, len: Int32(data.count), ip: address, port: port)
         if sendsize == Int32(data.count) {
-            return .success
+            return .success(())
         } else {
             return .failure(SocketError.unknownError)
         }
