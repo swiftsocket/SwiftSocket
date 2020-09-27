@@ -109,6 +109,15 @@ void enable_broadcast(int socket_fd) {
     setsockopt(socket_fd, SOL_SOCKET, SO_BROADCAST, &reuseon, sizeof(reuseon));
 }
 
+//set receiving timeout 
+void set_timeout(int socket_fd, int timeout_sec, int timeout_usec) {
+    struct timeval timeval;
+    timeval.tv_sec = timeout_sec;
+    timeval.tv_usec = timeout_usec;
+ 
+    setsockopt(socket_fd, SOL_SOCKET, SO_RCVTIMEO, &timeval, sizeof(timeval));
+}
+
 int yudpsocket_get_server_ip(char *host, char *ip) {
     struct hostent *hp;
     struct sockaddr_in address;
