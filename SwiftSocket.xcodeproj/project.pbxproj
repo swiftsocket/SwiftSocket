@@ -33,6 +33,7 @@
 		375C48351DDC4C56008C701D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375C48331DDC4C56008C701D /* Main.storyboard */; };
 		375C48371DDC4C56008C701D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 375C48361DDC4C56008C701D /* Assets.xcassets */; };
 		375C483A1DDC4C56008C701D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375C48381DDC4C56008C701D /* LaunchScreen.storyboard */; };
+		52799B9A25761279005F38D1 /* SwiftSocket_watchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 52799B9825761279005F38D1 /* SwiftSocket_watchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,9 @@
 		375C483B1DDC4C56008C701D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		377DAA691DCDE40200009697 /* SwiftSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		377DAA761DCDE45D00009697 /* SwiftSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		52799B9625761279005F38D1 /* SwiftSocket_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftSocket_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		52799B9825761279005F38D1 /* SwiftSocket_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftSocket_watchOS.h; sourceTree = "<group>"; };
+		52799B9925761279005F38D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		377DAA721DCDE45D00009697 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52799B9325761279005F38D1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -131,11 +142,21 @@
 			path = "../SwiftSocket iOS";
 			sourceTree = "<group>";
 		};
+		52799B9725761279005F38D1 /* SwiftSocket watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				52799B9825761279005F38D1 /* SwiftSocket_watchOS.h */,
+				52799B9925761279005F38D1 /* Info.plist */,
+			);
+			path = "SwiftSocket watchOS";
+			sourceTree = "<group>";
+		};
 		5518C82619A3290F0049DC22 = {
 			isa = PBXGroup;
 			children = (
 				5518C83119A329100049DC22 /* Source */,
 				375C482E1DDC4C56008C701D /* iOS Example */,
+				52799B9725761279005F38D1 /* SwiftSocket watchOS */,
 				5518C83019A329100049DC22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -147,6 +168,7 @@
 				377DAA761DCDE45D00009697 /* SwiftSocket.framework */,
 				375C482D1DDC4C56008C701D /* iOS Example.app */,
 				37454ECA1E06158200800AE5 /* SwiftSocket.framework */,
+				52799B9625761279005F38D1 /* SwiftSocket_watchOS.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -188,6 +210,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3723139C1DCF85270042DA87 /* SwiftSocket.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52799B9125761279005F38D1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52799B9A25761279005F38D1 /* SwiftSocket_watchOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +295,24 @@
 			productReference = 377DAA761DCDE45D00009697 /* SwiftSocket.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		52799B9525761279005F38D1 /* SwiftSocket watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52799B9D25761279005F38D1 /* Build configuration list for PBXNativeTarget "SwiftSocket watchOS" */;
+			buildPhases = (
+				52799B9125761279005F38D1 /* Headers */,
+				52799B9225761279005F38D1 /* Sources */,
+				52799B9325761279005F38D1 /* Frameworks */,
+				52799B9425761279005F38D1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SwiftSocket watchOS";
+			productName = "SwiftSocket watchOS";
+			productReference = 52799B9625761279005F38D1 /* SwiftSocket_watchOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -295,6 +343,11 @@
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 					};
+					52799B9525761279005F38D1 = {
+						CreatedOnToolsVersion = 12.2;
+						DevelopmentTeam = 55MHD24DX2;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 5518C82A19A3290F0049DC22 /* Build configuration list for PBXProject "SwiftSocket" */;
@@ -314,6 +367,7 @@
 				377DAA751DCDE45D00009697 /* SwiftSocket macOS */,
 				37454EC91E06158200800AE5 /* SwiftSocket tvOS */,
 				375C482C1DDC4C56008C701D /* iOS Example */,
+				52799B9525761279005F38D1 /* SwiftSocket watchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -344,6 +398,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		377DAA741DCDE45D00009697 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52799B9425761279005F38D1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -398,6 +459,13 @@
 				37454ED81E06163C00800AE5 /* Result.swift in Sources */,
 				37454EDB1E06163C00800AE5 /* ytcpsocket.c in Sources */,
 				37454EDA1E06163C00800AE5 /* TCPClient.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52799B9225761279005F38D1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,6 +724,82 @@
 			};
 			name = Release;
 		};
+		52799B9B25761279005F38D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 55MHD24DX2;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SwiftSocket watchOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ible-tech.SwiftSocket-watchOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Debug;
+		};
+		52799B9C25761279005F38D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 55MHD24DX2;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "SwiftSocket watchOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ible-tech.SwiftSocket-watchOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Release;
+		};
 		5518C83419A329100049DC22 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -797,6 +941,15 @@
 			buildConfigurations = (
 				377DAA7C1DCDE45D00009697 /* Debug */,
 				377DAA7D1DCDE45D00009697 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52799B9D25761279005F38D1 /* Build configuration list for PBXNativeTarget "SwiftSocket watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52799B9B25761279005F38D1 /* Debug */,
+				52799B9C25761279005F38D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
