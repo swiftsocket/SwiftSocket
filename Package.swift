@@ -20,6 +20,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SwiftSocket",
+            dependencies: ["SwiftSocket-c"]),
+        .target(
+            name: "SwiftSocket-c",
             dependencies: []),
         .testTarget(
             name: "SwiftSocketTests",
