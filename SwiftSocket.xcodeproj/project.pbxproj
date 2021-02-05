@@ -17,11 +17,16 @@
 		56AE7B4625CD3F940068681D /* TCPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B3D25CD3F940068681D /* TCPClient.swift */; };
 		56AE7B4725CD3F940068681D /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B3E25CD3F940068681D /* Result.swift */; };
 		56AE7B4825CD3F940068681D /* SwiftSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 56AE7B3F25CD3F940068681D /* SwiftSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		56AE7B4925CD3F940068681D /* Info-tvOS.plist in Resources */ = {isa = PBXBuildFile; fileRef = 56AE7B4025CD3F940068681D /* Info-tvOS.plist */; };
 		56AE7B4A25CD3F940068681D /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B4125CD3F940068681D /* UDPClient.swift */; };
 		56AE7B4C25CD3F940068681D /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B4325CD3F940068681D /* Socket.swift */; };
 		56AE7B7025CD40690068681D /* SwiftSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 56AE7B3F25CD3F940068681D /* SwiftSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		56AE7B7525CD406E0068681D /* SwiftSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 56AE7B3F25CD3F940068681D /* SwiftSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		56AE7BAA25CD440B0068681D /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B4125CD3F940068681D /* UDPClient.swift */; };
+		56AE7BAB25CD440B0068681D /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B3B25CD3F940068681D /* yudpsocket.c */; };
+		56AE7BAC25CD440B0068681D /* TCPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B3D25CD3F940068681D /* TCPClient.swift */; };
+		56AE7BAD25CD440B0068681D /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B3C25CD3F940068681D /* ytcpsocket.c */; };
+		56AE7BAE25CD440B0068681D /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B3E25CD3F940068681D /* Result.swift */; };
+		56AE7BAF25CD440B0068681D /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7B4325CD3F940068681D /* Socket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +99,7 @@
 		5518C82619A3290F0049DC22 = {
 			isa = PBXGroup;
 			children = (
+				56AE7B5325CD3FDA0068681D /* Supporting Files */,
 				56AE7B3925CD3F940068681D /* Sources */,
 				375C482E1DDC4C56008C701D /* iOS Example */,
 				5518C83019A329100049DC22 /* Products */,
@@ -122,7 +128,6 @@
 		56AE7B3A25CD3F940068681D /* SwiftSocket */ = {
 			isa = PBXGroup;
 			children = (
-				56AE7B5325CD3FDA0068681D /* Supporting Files */,
 				56AE7B5225CD3FA10068681D /* UDPSocket */,
 				56AE7B5125CD3F990068681D /* TCPSocket */,
 				56AE7B3E25CD3F940068681D /* Result.swift */,
@@ -335,7 +340,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56AE7B4925CD3F940068681D /* Info-tvOS.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +386,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56AE7BAA25CD440B0068681D /* UDPClient.swift in Sources */,
+				56AE7BAB25CD440B0068681D /* yudpsocket.c in Sources */,
+				56AE7BAC25CD440B0068681D /* TCPClient.swift in Sources */,
+				56AE7BAD25CD440B0068681D /* ytcpsocket.c in Sources */,
+				56AE7BAE25CD440B0068681D /* Result.swift in Sources */,
+				56AE7BAF25CD440B0068681D /* Socket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,7 +432,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/SwiftSocket/Supporting Files/Info-tvOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -455,7 +465,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/SwiftSocket/Supporting Files/Info-tvOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -539,7 +549,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/SwiftSocket/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -575,7 +585,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/SwiftSocket/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -606,7 +616,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/SwiftSocket/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 2.1.1;
@@ -633,7 +643,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/SwiftSocket/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 2.1.1;
