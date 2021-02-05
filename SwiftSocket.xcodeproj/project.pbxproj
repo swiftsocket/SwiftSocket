@@ -29,6 +29,9 @@
 		56AE7BE325CD47100068681D /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7BD625CD47080068681D /* yudpsocket.c */; };
 		56AE7BE825CD47130068681D /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7BD725CD47080068681D /* ytcpsocket.c */; };
 		56AE7BED25CD47130068681D /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 56AE7BD725CD47080068681D /* ytcpsocket.c */; };
+		56AE7C0125CD56630068681D /* SwiftSocketC.h in Headers */ = {isa = PBXBuildFile; fileRef = 56AE7C0025CD56630068681D /* SwiftSocketC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		56AE7C0225CD56630068681D /* SwiftSocketC.h in Headers */ = {isa = PBXBuildFile; fileRef = 56AE7C0025CD56630068681D /* SwiftSocketC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		56AE7C0325CD56630068681D /* SwiftSocketC.h in Headers */ = {isa = PBXBuildFile; fileRef = 56AE7C0025CD56630068681D /* SwiftSocketC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +54,7 @@
 		56AE7B4325CD3F940068681D /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
 		56AE7BD625CD47080068681D /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yudpsocket.c; sourceTree = "<group>"; };
 		56AE7BD725CD47080068681D /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ytcpsocket.c; sourceTree = "<group>"; };
+		56AE7C0025CD56630068681D /* SwiftSocketC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftSocketC.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,10 +172,19 @@
 		56AE7BD525CD47080068681D /* SwiftSocketC */ = {
 			isa = PBXGroup;
 			children = (
+				56AE7BFF25CD56630068681D /* include */,
 				56AE7BD625CD47080068681D /* yudpsocket.c */,
 				56AE7BD725CD47080068681D /* ytcpsocket.c */,
 			);
 			path = SwiftSocketC;
+			sourceTree = "<group>";
+		};
+		56AE7BFF25CD56630068681D /* include */ = {
+			isa = PBXGroup;
+			children = (
+				56AE7C0025CD56630068681D /* SwiftSocketC.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56AE7B7525CD406E0068681D /* SwiftSocket.h in Headers */,
+				56AE7C0325CD56630068681D /* SwiftSocketC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56AE7B4825CD3F940068681D /* SwiftSocket.h in Headers */,
+				56AE7C0125CD56630068681D /* SwiftSocketC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				56AE7B7025CD40690068681D /* SwiftSocket.h in Headers */,
+				56AE7C0225CD56630068681D /* SwiftSocketC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
