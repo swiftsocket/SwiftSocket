@@ -1,7 +1,8 @@
+# coding: utf-8
 Pod::Spec.new do |s|
 
   s.name         = 'SwiftSocket'
-  s.version      = '2.0.2'
+  s.version      = '2.1.1'
   s.summary      = 'A cool framework to work with TCP and UDP sockets'
 
   s.description  = <<-DESC
