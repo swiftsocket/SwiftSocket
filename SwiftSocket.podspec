@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'SwiftSocket'
-  s.version      = '2.2.1'
+  s.version      = '2.3'
   s.summary      = 'A cool framework to work with TCP and UDP sockets'
 
   s.description  = <<-DESC
@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
   }
   s.source_files  = 'Sources/**/*.{swift,c}'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5' }
-  s.swift_version = '5.4.2'
+
 end
