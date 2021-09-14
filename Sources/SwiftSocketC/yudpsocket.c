@@ -90,7 +90,7 @@ int yudpsocket_close(int socket_fd) {
 }
 
 //return socket fd
-int yudpsocket_client() {
+int yudpsocket_client(void) {
     //create socket
     int socketfd = socket(AF_INET, SOCK_DGRAM, 0);
     int reuseon = 1;

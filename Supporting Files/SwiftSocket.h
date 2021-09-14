@@ -7,3 +7,4 @@ FOUNDATION_EXPORT double SwiftSocketVersionNumber;
 FOUNDATION_EXPORT const unsigned char SwiftSocketVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <SwiftSocket_iOS/PublicHeader.h>
+#import <SwiftSocketC.h>
