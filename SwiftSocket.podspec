@@ -1,7 +1,8 @@
+# coding: utf-8
 Pod::Spec.new do |s|
 
   s.name         = 'SwiftSocket'
-  s.version      = '2.0.2'
+  s.version      = '2.3.1'
   s.summary      = 'A cool framework to work with TCP and UDP sockets'
 
   s.description  = <<-DESC
@@ -15,14 +16,14 @@ Pod::Spec.new do |s|
   s.author             = { 'Dan Shevlyuk' => 'danshevlyuk@icloud.com' }
   s.social_media_url   = 'http://twitter.com/danshevluk'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '13.0'
   s.osx.deployment_target = '10.10'
   s.tvos.deployment_target = '9.0'
   s.source   = {
-    :git => 'https://github.com/swiftsocket/SwiftSocket.git',
+    :git => 'git@github.com:charles-awayup/SwiftSocket.git',
     :tag => s.version
   }
   s.source_files  = 'Sources/**/*.{swift,c}'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5' }
-
+  s.swift_versions = "4.3.2"
 end
