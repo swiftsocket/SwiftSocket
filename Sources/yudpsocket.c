@@ -80,7 +80,7 @@ int yudpsocket_recive(int socket_fd, char *outdata, int expted_len, char *remote
     int len = (int)recvfrom(socket_fd, outdata, expted_len, 0, (struct sockaddr *)&cli_addr, &clilen);
     char *clientip = inet_ntoa(cli_addr.sin_addr);
     memcpy(remoteip, clientip, strlen(clientip));
-    *remoteport = cli_addr.sin_port;
+    *remoteport = ntohs(cli_addr.sin_port);
   
     return len;
 }
