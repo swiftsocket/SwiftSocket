@@ -116,7 +116,7 @@ open class UDPClient: Socket {
         guard let fd = self.fd else {
             return (nil, "no ip", 0)
         }
-        var buff: [Byte] = [Byte](repeating: 0x0, count: expectlen)
+        let buff: [Byte] = [Byte](repeating: 0x0, count: expectlen)
         var remoteipbuff: [Int8] = [Int8](repeating: 0x0, count: 16)
         var remoteport: Int32 = 0
         let readLen: Int32 = c_yudpsocket_recive(fd, buff: buff, len: Int32(expectlen), ip: &remoteipbuff, port: &remoteport)
@@ -154,7 +154,7 @@ open class UDPServer: Socket {
     //TODO add multycast and boardcast
     open func recv(_ expectlen: Int) -> ([Byte]?, String, Int) {
         if let fd = self.fd {
-            var buff: [Byte] = [Byte](repeating: 0x0,count: expectlen)
+            let buff: [Byte] = [Byte](repeating: 0x0,count: expectlen)
             var remoteipbuff: [Int8] = [Int8](repeating: 0x0,count: 16)
             var remoteport: Int32 = 0
             let readLen: Int32 = c_yudpsocket_recive(fd, buff: buff, len: Int32(expectlen), ip: &remoteipbuff, port: &remoteport)
