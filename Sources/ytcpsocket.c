@@ -201,7 +201,7 @@ int ytcpsocket_accept(int onsocketfd, char *remoteip, int *remoteport, int timeo
     int newsockfd = accept(onsocketfd, (struct sockaddr *) &cli_addr, &clilen);
     char *clientip=inet_ntoa(cli_addr.sin_addr);
     memcpy(remoteip, clientip, strlen(clientip));
-    *remoteport = cli_addr.sin_port;
+    *remoteport = ntohs(cli_addr.sin_port);
     if (newsockfd > 0) {
         int set = 1;
         setsockopt(newsockfd, SOL_SOCKET, SO_NOSIGPIPE, (void*) &set, sizeof(int));
